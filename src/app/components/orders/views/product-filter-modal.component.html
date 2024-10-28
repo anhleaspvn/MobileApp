@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()" fill="clear">
+        <ion-icon name="close-outline" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- <ion-searchbar #searchBar [(ngModel)]="searchTerm" (ionChange)="filterProducts()" (ionClear)="products=[]"
+      cancelButtonIcon="" debounce="500" showCancelButton="never" placeholder="Tên, sdt, mã, đơn hàng...">
+    </ion-searchbar> -->
+    <app-asp-search [(aspModel)]="searchTerm" (aspModelChange)="filterProducts()"
+      placeholder="Tìm kiếm sản phẩm..." [autofocus]="true">
+    </app-asp-search>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ng-container *ngIf="!loading;else loadingTmpl">
+    <ion-list class="mt-10">
+      <ion-item *ngFor="let item of products" (click)="onChangeRadio(item)" [detail]="false" [button]="true">
+        <ion-label class="ion-text-wrap">
+          <h3>{{item.ten_Vt}}</h3>
+          <p class="asp-color-medium">{{item.ma_Vt}}</p>
+        </ion-label>
+        <!-- <ion-radio [value]="item.ma_Vt" color="asp" slot="start" (ionFocus)="onChangeRadio(item)"></ion-radio> -->
+        <ion-note slot="end" color="asp" class="mr-0" style="font-size:11pt">
+          <span class="asp-color-medium">{{item.dvt}}</span>
+        </ion-note>
+      </ion-item>
+      <!-- <ion-radio-group [(ngModel)]="radioModel">
+        <ion-item *ngFor="let item of products">
+          <ion-label class="ion-text-wrap">
+            <h3>{{item.ten_Vt}}</h3>
+            <p class="asp-color-medium">{{item.ma_Vt}}</p>
+            <p class="asp-color-medium">{{item.ten_Nh_Vt}}</p>
+          </ion-label>
+          <ion-radio [value]="item.ma_Vt" color="asp" slot="start" (ionFocus)="onChangeRadio(item)"></ion-radio>
+          <ion-note slot="end" color="asp" class="mr-0" style="font-size:11pt">
+            <span class="asp-color">{{item.gia_Goc || 0 | number}}<sup>đ</sup></span>
+          </ion-note>
+        </ion-item>
+      </ion-radio-group> -->
+    </ion-list>
+  </ng-container>
+
+  <ng-template #loadingTmpl>
+    <asp-skeleton></asp-skeleton>
+  </ng-template>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

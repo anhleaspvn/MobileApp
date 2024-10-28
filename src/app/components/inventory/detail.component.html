@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <!-- <ion-back-button routerLink="/components/order/list" text=""></ion-back-button> -->
+      <ion-button [fill]="'clear'" routerLink="/components/inventory/list">
+        <ion-icon slot="icon-only" ios="chevron-back-outline" md="arrow-back-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Chi tiết kiểm kê</ion-title>
+    <ion-buttons slot="end" fill="clear">
+      <ion-button *ngIf="perm?.allow_Edit" routerLink="/components/inventory/create">
+        <ion-icon slot="icon-only" name="add-sharp" size="large">
+        </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="light" class="ion-padding">
+  <ng-container *ngIf="!loading; else topLoadingTemplate">
+    <ion-row class="info-top mt-20">
+      <span class="icon-top">
+        <!-- <i class="material-icons icon">description</i> -->
+        <ion-icon *ngIf="vm?.is_App;else desktopIcon" class="icon" name="phone-portrait-outline" size="large"
+          [color]="vm?.is_HoanThanh?'asp':'danger'">
+        </ion-icon>
+        <ng-template #desktopIcon>
+          <ion-icon name="desktop-outline" [color]="vm?.is_HoanThanh?'secondary':'danger'" size="large" class="icon">
+          </ion-icon>
+        </ng-template>
+      </span>
+      <ion-col size="12" class="ion-text-center mt-20">
+        <ion-text color="medium">
+          <p class="title info-top-text">{{vm?.ten_Kho}}</p>
+        </ion-text>
+        <ion-text color="medium">
+          <p>{{vm?.ngay_Kk | formatDate:'dd/MM/yyyy, HH:mm'}}</p>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+
+  <div class="p-5">
+    <ion-segment [(ngModel)]="segment" color="asp">
+      <ion-segment-button value="info">
+        <ion-label>Thông tin</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="products">
+        <ion-label>Sản phẩm</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <ion-grid>
+    <ng-container [ngSwitch]="segment">
+
+      <ng-container *ngSwitchCase="'info'">
+        <ng-container *ngIf="!loading; else elseTemplate">
+          <app-inventory-info [vm]="vm"></app-inventory-info>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <asp-skeleton></asp-skeleton>
+        </ng-template>
+
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'products'">
+        <app-inventory-info-products [vm]="vm"></app-inventory-info-products>
+      </ng-container>
+
+    </ng-container>
+  </ion-grid>
+
+  <ng-template #topLoadingTemplate>
+    <ion-row class="info-top mt-20">
+      <span class="icon-top">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </span>
+      <ion-col size="12" text-center class="mt-20">
+        <ion-text color="medium">
+          <p class="title info-top-text">
+            <ion-skeleton-text animated style="width: 50%;margin: auto;"></ion-skeleton-text>
+          </p>
+        </ion-text>
+        <h4 class="total info-top-text">
+          <ion-skeleton-text animated style="width: 50%;margin: auto;"></ion-skeleton-text>
+        </h4>
+        <ion-text>
+          <ion-skeleton-text animated style="width: 50%;margin: auto;"></ion-skeleton-text>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ng-template>
+
+</ion-content>
+
+
+<ng-container *ngIf="!loading">
+
+  <ion-footer color="bgcolor" class="bg-footer ion-no-border">
+    <ion-item color="bgcolor" class="ion-text-center pt-8 pb-8" lines="none">
+      <ion-label class="ion-no-padding ion-text-center ion-no-margin">
+        <ion-button [disabled]="submitting"  (click)="completedSet()" expand="block" size="default" color="asp">
+          <span>Tạo phiếu điều chỉnh</span>
+          <ion-icon name="return-down-forward-outline" slot="start" size="default" *ngIf="!submitting"></ion-icon>
+          <ion-spinner slot="start" size="default" *ngIf="submitting"></ion-spinner>
+        </ion-button>
+      </ion-label>
+    </ion-item>
+  </ion-footer>
+
+
+</ng-container>

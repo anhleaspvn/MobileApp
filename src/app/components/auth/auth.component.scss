@@ -1,0 +1,35 @@
+#auth-page {
+  .form-header {
+    img {
+      max-width: 200px;
+      max-height: 150px;
+    }
+  }
+
+  .asp-input-icon {
+    position: absolute;
+    left: 8px;
+  }
+
+  ion-button[type="submit"] {
+    height: 45px;
+  }
+
+  .btn-login-input {
+    position: absolute;
+    right: 20px;
+  }
+
+  .form-action {
+    line-height: 35px;
+
+    button {
+      float: right;
+      line-height: 40px;
+      font-size: 16px;
+    }
+  }
+}
+.copyright {
+ font-size: 14px;
+}

@@ -1,0 +1,167 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button [fill]="'clear'" [routerLink]="['/components/order/list', strMaCt]">
+        <ion-icon slot="icon-only" ios="chevron-back-outline" md="arrow-back-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">{{ strTitle }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" color="light" class="p-8">
+  <ion-grid>
+    <mat-horizontal-stepper labelPosition="bottom" [linear]="linner" #stepper>
+      <!-- (click)="selectStepByIndex(myStepper.selectedIndex)" -->
+      <mat-step [stepControl]="fdInfo.control">
+        <ng-template matStepLabel>Thông tin chung</ng-template>
+        <form role="form" #fdInfo="ngForm">
+          <app-voucher-step-info-form [(model)]="model"></app-voucher-step-info-form>
+
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Sản phẩm</ng-template>
+        <app-voucher-step-products-form [(model)]="model"></app-voucher-step-products-form>
+      </mat-step>
+
+      <mat-step [stepControl]="fdInfo.control">
+        <ng-template matStepLabel>Thanh toán</ng-template>
+        <div class="payment">
+          <div *ngIf="model.detail.length > 0">
+            <div size="12">
+
+              <ion-item>
+                <ion-label class="ion-no-margin">
+                  <ion-text class="ion-text-left">Tiền hàng</ion-text>
+                  <ion-text class="ion-float-right" text-bold>{{model.header.tTien_Hang | number}}<sup>&nbsp;đ</sup>
+                  </ion-text>
+                </ion-label>
+              </ion-item>
+
+              <ion-item lines="none" class="mt-10">
+                <mat-form-field appearance="outline" style="width: 40%;">
+                  <mat-label>Chiết khấu</mat-label>
+                  <input matInput type="tel" [(ngModel)]="model.header.chiet_Khau"
+                    (ngModelChange)="chiet_Khau_Change($event)" currencyMask [options]="currencyMask">
+                  <button mat-button *ngIf="model.header.chiet_Khau && model.header.chiet_Khau > 0" matPrefix
+                    mat-icon-button aria-label="Clear" (click)="model.header.chiet_Khau = 0">
+                    <mat-icon class="asp-color-medium">close</mat-icon>
+                  </button>
+                  <span matSuffix class="cus-topsuffix">&nbsp;%</span>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" style="width: 60%;">
+                  <mat-label>Tổng tiền chiết khấu</mat-label>
+                  <input matInput currencyMask type="tel" [(ngModel)]="model.header.tTien4"
+                    (ngModelChange)="ttien4_Change()" [options]="currencyMask" placeholder="Nhập tiền">
+                  <button mat-button *ngIf="model.header.tTien4 && model.header.tTien4 > 0" matPrefix mat-icon-button
+                    aria-label="Clear" (click)="model.header.tTien4 = 0">
+                    <mat-icon class="asp-color-medium">close</mat-icon>
+                  </button>
+                  <span matSuffix class="cus-topsuffix">&nbsp;đ</span>
+                </mat-form-field>
+              </ion-item>
+
+              <ion-item lines="none" class="mt-10">
+                <mat-form-field appearance="outline" style="width: 40%;">
+                  <mat-label>Mã thuế</mat-label>
+                  <mat-select name="ma_Thue" [(ngModel)]="model.header.ma_Thue" (selectionChange)="ma_Thue_Change()">
+                    <mat-option *ngFor="let op of listMa_Thue" [value]="op.ma_Thue">
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" style="width: 60%;">
+                  <mat-label>Tổng tiền thuế</mat-label>
+                  <input matInput currencyMask type="tel" [(ngModel)]="model.header.tTien3" readonly
+                    [options]="currencyMask">
+                  <!-- <button mat-button *ngIf="model.header.tTien3 && model.header.tTien3 > 0" matPrefix mat-icon-button
+                    aria-label="Clear" (click)="model.header.tTien3 = 0">
+                    <mat-icon class="asp-color-medium">close</mat-icon>
+                  </button> -->
+                  <span matSuffix class="cus-topsuffix">&nbsp;đ</span>
+                </mat-form-field>
+              </ion-item>
+
+
+              <!-- <ion-item lines="none">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Tiền phụ phí</mat-label>
+                  <input matInput currencyMask type="tel" [(ngModel)]="model.header.tTien_PhuPhi"
+                    (change)="updatePayments()" [options]="currencyMask" placeholder="Nhập tiền phụ phí">
+                  <button mat-button *ngIf="model.header.tTien_PhuPhi && model.header.tTien_PhuPhi > 0" matPrefix
+                    mat-icon-button aria-label="Clear" (click)="model.header.tTien_PhuPhi = 0">
+                    <mat-icon class="asp-color-medium">close</mat-icon>
+                  </button>
+                  <span matSuffix class="cus-topsuffix">&nbsp;đ</span>
+                </mat-form-field>
+              </ion-item> -->
+
+              <ion-item>
+                <ion-label class="ion-no-margin">
+                  <ion-text class="ion-text-left">Tiền thanh toán</ion-text>
+                  <ion-text class="ion-float-right" text-bold color="danger">
+                    {{model.header.tTien_ThanhToan | number}}<sup>&nbsp;đ</sup>
+                  </ion-text>
+                </ion-label>
+              </ion-item>
+            </div>
+          </div>
+        </div>
+      </mat-step>
+
+    </mat-horizontal-stepper>
+  </ion-grid>
+</ion-content>
+
+<ion-footer color="bgcolor" class="bg-footer ion-no-border">
+
+  <div *ngIf="myStepper && myStepper.selectedIndex == 0">
+
+    <ion-item color="bgcolor" class="ion-text-center pt-8 pb-8" lines="none">
+      <ion-label class="ion-no-padding ion-text-center ion-no-margin">
+        <ion-button color="asp" size="default" (click)="resetInfo()" [disabled]="fdInfo.invalid">
+          Nhập lại
+        </ion-button>
+        <ion-button color="asp" size="default" (click)="stepperClicked(stepper)" [disabled]="fdInfo.invalid">
+          Tiếp theo
+        </ion-button>
+      </ion-label>
+    </ion-item>
+
+  </div>
+
+  <div *ngIf="myStepper && myStepper.selectedIndex == 1">
+    <ion-list *ngIf="model.detail.length > 0" color="bgcolor" class="bg-footer" lines="none" class="ion-no-margin">
+      <ion-item color="bgcolor" lines="none" class="ion-no-margin">
+        <ion-label class="ion-no-padding ion-no-margin" slot="start">Tổng tiền hàng</ion-label>
+        <ion-note style="font-size: inherit;" slot="end" color="dart" text-bold>{{model.header.tTien_Hang |
+          number}}<sup>&nbsp;đ</sup></ion-note>
+      </ion-item>
+
+      <ion-item color="bgcolor" class="ion-text-center pt-8 pb-8" lines="none">
+        <ion-label class="ion-no-padding ion-text-center ion-no-margin">
+          <ion-button color="asp" expand="block" size="default" [disabled]="model.detail.length ==0"
+            (click)="stepperClicked(stepper)">
+            Tiếp theo
+          </ion-button>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+  </div>
+
+  <div *ngIf="myStepper && myStepper.selectedIndex == 2">
+    <ion-item color="bgcolor" class="ion-text-center pt-8 pb-8" lines="none">
+      <ion-label class="ion-no-padding ion-text-center ion-no-margin">
+        <ion-button (click)="onSubmit()" expand="block" size="default" color="asp"
+          [disabled]=" fdInfo.invalid ||  !model.detail || model.detail.length == 0 ||submitting || FormCheckValid()">
+          <span>Lưu</span>
+          <ion-spinner slot="start" size="default" *ngIf="submitting"></ion-spinner>
+          <ion-icon name="checkmark-done-sharp" slot="start" size="default" *ngIf="!submitting"></ion-icon>
+        </ion-button>
+      </ion-label>
+    </ion-item>
+  </div>
+</ion-footer>

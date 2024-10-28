@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button [fill]="'clear'" [routerLink]="['/components/qcinspection/list']">
+        <ion-icon slot="icon-only" ios="chevron-back-outline" md="arrow-back-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Tạo mới ngoại quan</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="form-row">
+    <mat-form-field appearance="fill">
+      <mat-label>Mã nội dung</mat-label>
+      <input matInput name="iqcCheckID" [(ngModel)]="model.iqcCheckID" 
+      (focus)="openStageExsFilterModal()" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Mã công đoạn</mat-label>
+      <input matInput name="iqcCheckCont" [(ngModel)]="iqcCheckCont" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Số lượng mẫu</mat-label>
+      <input matInput name="iqcTemplateQuantity" [(ngModel)]="iqcTemplateQuantity" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Kết quả kiểm tra</mat-label>
+      <input matInput name="iqcEvalueResult" [(ngModel)]="iqcEvalueResult" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Thời gian kiểm tra</mat-label>
+      <input matInput name="iqcPeriodTime" [(ngModel)]="iqcPeriodTime" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <!-- <mat-form-field appearance="fill">
+      <mat-label>Danh sách lỗi</mat-label>
+      <input matInput name="iqcDefect" [(ngModel)]="iqcDefect"
+      (focus)="openDefectFilterModal()">
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field> -->
+  </div>
+</ion-content>
+<ion-footer>
+  <div>
+    <ion-item color="bgcolor" class="ion-text-center pt-8 pb-8" lines="none">
+      <ion-label class="ion-no-padding ion-text-center ion-no-margin">
+        <ion-button (click)="onSubmit()" expand="block" size="default" color="asp">
+          <span>Lưu</span>
+          <ion-spinner slot="start" size="default" *ngIf="submitting"></ion-spinner>
+          <ion-icon name="checkmark-done-sharp" slot="start" size="default" *ngIf="!submitting"></ion-icon>
+        </ion-button>
+      </ion-label>
+    </ion-item>
+  </div>
+</ion-footer>

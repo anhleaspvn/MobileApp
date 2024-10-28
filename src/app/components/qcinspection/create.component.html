@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button [fill]="'clear'" [routerLink]="['/components/qcinspection/list']">
+        <ion-icon slot="icon-only" ios="chevron-back-outline" md="arrow-back-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Tạo mới LSX</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="form-row">
+    <mat-form-field appearance="fill">
+      <mat-label>Ngày lập</mat-label>
+      <input type="date" matInput name="docDate" [(ngModel)]="docDate" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Lệnh sản xuất</mat-label>
+      <input matInput name="woDocNo" [(ngModel)]="model.woDocNo" 
+      (focus)="openWOsFilterModal()" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Tình trạng sản xuất</mat-label>
+      <input matInput name="status" [(ngModel)]="model.status" 
+      (focus)="openStatusFilterModel()" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>ID of QC</mat-label>
+      <input matInput name="qcID" [(ngModel)]="qcID" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Trạng thái KT</mat-label>
+      <input matInput name="checkState" [(ngModel)]="model.checkState"
+      (focus)="openCheckStateFilterModel()" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</ion-content>
+<ion-footer>
+  <div>
+    <ion-item color="bgcolor" class="ion-text-center pt-8 pb-8" lines="none">
+      <ion-label class="ion-no-padding ion-text-center ion-no-margin">
+        <ion-button (click)="onSubmit()" expand="block" size="default" color="asp">
+          <span>Lưu</span>
+          <ion-spinner slot="start" size="default" *ngIf="submitting"></ion-spinner>
+          <ion-icon name="checkmark-done-sharp" slot="start" size="default" *ngIf="!submitting"></ion-icon>
+        </ion-button>
+      </ion-label>
+    </ion-item>
+  </div>
+</ion-footer>

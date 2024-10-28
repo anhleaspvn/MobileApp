@@ -1,0 +1,122 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button [fill]="'clear'" routerLink="/tabs/home">
+        <ion-icon slot="icon-only" ios="chevron-back-outline" md="arrow-back-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>QC INSPECTION</ion-title>
+    <ion-buttons slot="end" fill="clear">
+      <ion-button>
+        <i class="material-icons">sort_by_alpha</i>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="loadMoreData($event,true)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/components/qcinspection/create" color="asp">
+      <ion-icon name="add" size="large"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+  <ion-row>
+   <ion-col size="12">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Lọc theo ngày</mat-label>
+        <mat-date-range-input [max]="today" [rangePicker]="picker" (click)="picker.open()">
+          <input matStartDate [(ngModel)]="filterModel.fromDate" disabled placeholder="Ngày bắt đầu"
+            (focus)="picker.open()">
+          <input matEndDate [(ngModel)]="filterModel.toDate" (dateChange)="onDateChange()" 
+          disabled placeholder="Ngày kết thúc" (focus)="picker.open()">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="loading"></mat-datepicker-toggle>
+        <mat-date-range-picker touchUi #picker [disabled]="loading"></mat-date-range-picker>
+        
+      </mat-form-field>
+    </ion-col>   
+    <ion-col size="12">
+      <app-asp-search [(aspModel)]="filterModel.keyword" [animated]="true" (aspModelChange)="getList()" placeholder="Tìm kiếm theo lệnh sản xuất"></app-asp-search>
+    </ion-col>
+  </ion-row>
+   <ion-grid>
+    <ng-container *ngIf="!loading; else elseTemplate">
+      
+      <ion-list class="mt-0 pt-0">
+        <!-- <ion-item detail="false" button="false" lines="{{totalCount>0?'inset':'none'}}">
+          <ion-label class="ion-no-margin ion-no-padding" >
+            <p text-bold>Tổng:&nbsp;{{totalCount | number}}</p>
+          </ion-label>
+        </ion-item> -->
+
+        <ion-item *ngFor="let item of data;trackBy:trackBy">
+          <ion-button fill="clear" [matMenuTriggerFor]="menu" slot="start" color="medium">
+            <ion-icon slot="start" *ngIf="item.is_App;else desktopIcon" name="phone-portrait-outline"
+              color="asp">
+            </ion-icon>
+          </ion-button>
+
+          <ng-template #desktopIcon>
+            <ion-icon slot="start" name="desktop-outline" color="asp"></ion-icon>
+          </ng-template>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="view_createexins(item)" detail="true">
+              <mat-icon>input</mat-icon>
+              <span>Nhập ngoại quan</span>
+            </button>
+            <button mat-menu-item (click)="view_dim(item)" detail="true">
+              <mat-icon>input</mat-icon>
+              <span>Nhập Dim function</span>
+            </button>
+            <button mat-menu-item (click)="view_exinsdetail(item)" detail="true">
+              <mat-icon>preview</mat-icon>
+              <span>Xem ngoại quan</span>
+            </button>
+            <button mat-menu-item (click)="view_dimdetail(item)" detail="true">
+              <mat-icon>preview</mat-icon>
+              <span>Xem Dim function</span>
+            </button>
+            <button mat-menu-item (click)="view_edit(item)" detail="true">
+              <mat-icon>edit</mat-icon>
+              <span>Sửa</span>
+            </button>
+            <button mat-menu-item (click)="delete(item)" detail="true">
+              <mat-icon>delete</mat-icon>
+              <span>Xoá</span>
+            </button>
+          </mat-menu>
+          <ion-label class="ion-no-padding" routerLink="/components/qcinspection/detail/{{item.headerID}}">
+            <h3>
+              {{item.woDocNo}}
+            </h3>
+            <p>{{item.productID}}</p>
+            <p>{{item.customerID}}</p>
+          </ion-label>
+          <ion-note slot="end">
+            <span class="asp-color-medium">
+              <p style="color: red;">{{item.prodReqQuantity | number}}</p>
+              <p style="color: red">{{item.checkState}}</p>
+              <p style="color: blue">{{item.prodStatus}}</p>
+            </span>
+          </ion-note>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+   </ion-grid>
+</ion-content>
+<ion-footer>
+  <!-- <div style="align-items: end;">
+    <ion-item color="bgcolor" class="ion-text-center pt-8 pb-8" lines="none">
+      <ion-label class="ion-no-padding ion-text-center ion-no-margin">
+        <ion-button routerLink="/components/qcinspection/create/{{item.headerID}}" expand="block" size="default" color="asp">
+          <span>Thêm mới</span>
+          <ion-spinner slot="start" size="default" *ngIf="submitting"></ion-spinner>
+          <ion-icon name="checkmark-done-sharp" slot="start" size="default" *ngIf="!submitting"></ion-icon>
+        </ion-button>
+      </ion-label>
+    </ion-item>
+  </div> -->
+</ion-footer>

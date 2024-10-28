@@ -1,0 +1,10 @@
+<mat-card [ngClass]="classList">
+  <mat-card-subtitle>{{title}}</mat-card-subtitle>
+  <p>
+    <ng-container *ngFor="let c of chips">
+      <ion-chip [color]="tagDefaultColor(c.value)" [id]="c.value" (click)="onChange(c.value)">
+        <ion-label>{{c.label}}</ion-label>
+      </ion-chip>
+    </ng-container>
+  </p>
+</mat-card>

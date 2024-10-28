@@ -1,0 +1,108 @@
+@import "../../../assets/sass/variables.scss";
+@import "../../../assets/sass/gallery.scss";
+
+.title {
+    color: #616161;
+}
+
+::ng-deep .gallery-div {
+    cursor: pointer;
+
+    img {
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.info-top {
+    background-color: #fff;
+    border-radius: 4px;
+    margin-bottom: 16px;
+
+    .icon-top {
+        display: block;
+        width: 100%;
+        position: relative;
+
+        .icon {
+            border: solid 1px #e0e0e0;
+            border-radius: 50%;
+            padding: 7px;
+            background: #fff;
+            position: absolute;
+            top: -20px;
+            right: 43%;
+            font-size: 28px;
+            color: $asp-primary-colors;
+        }
+
+        .text {
+            border: solid 1px #e0e0e0;
+            border-radius: 50%;
+            padding: 7px;
+            background: #fff;
+            position: absolute;
+            top: -20px;
+            right: 43%;
+            font-size: 28px;
+        }
+    }
+
+    .total {
+        color: #000000;
+        opacity: 0.9;
+        font-weight: 600;
+    }
+
+    .info-top-text {
+        line-height: 0.8;
+    }
+}
+
+.info-detail {
+    border-radius: 4px;
+
+    ion-item {
+        ion-label {
+            font-size: 11pt;
+        }
+
+        mat-chip {
+            background-color: $asp-primary-colors;
+            color: white;
+        }
+
+        .title {
+            font-size: 10pt;
+        }
+
+        .content {
+            font-size: 11pt;
+            color: black;
+            margin-top: -3px !important;
+            max-width: 80%;
+        }
+
+        .status-gift {
+            font-size: 9pt;
+            color: white;
+            background-color: $asp-danger-colors;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        ion-note {
+            font-size: 10pt;
+        }
+    }
+
+    &.product {
+        ion-item:last-child {
+            --border-width: 0 0 0 0 !important;
+
+            .item-inner {
+                border-bottom: none !important;
+            }
+        }
+    }
+}
