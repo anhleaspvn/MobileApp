@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">Production Scan QRCode</string>
-    <string name="title_activity_main">Production Scan QRCode</string>
-    <string name="package_name">vn.asp.app</string>
-    <string name="custom_url_scheme">vn.asp.app</string>
-</resources>
