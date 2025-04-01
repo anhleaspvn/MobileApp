@@ -1,0 +1,134 @@
+<ion-row>
+
+
+  <ion-col size="12">
+    <mat-form-field appearance="fill">
+      <mat-label>Kho</mat-label>
+      <mat-select name="ma_Kho" [(ngModel)]="model.header.ma_Kho" required>
+        <mat-option *ngFor="let op of inventories" [value]="op.ma_Kho">
+          {{ op.ten_Kho }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ion-col>
+
+  <!-- [disabled]="model.header.ma_Ct='DC'" -->
+  <ng-container *ngIf="strMaCt == 'DC'">
+    <ion-col size="12">
+      <mat-form-field appearance="fill">
+        <mat-label>Kho nhập</mat-label>
+        <mat-select name="ma_KhoN" [(ngModel)]="model.header.ma_KhoN" required>
+          <mat-option *ngFor="let op of inventories" [value]="op.ma_Kho">
+            {{ op.ten_Kho }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ion-col>
+  </ng-container>
+
+  <ion-col size="12">
+    <mat-form-field appearance="fill">
+      <mat-label>Loại nhập xuất</mat-label>
+      <mat-select name="Ma_LoaiNX" [(ngModel)]="model.header.ma_LoaiNX" required>
+        <mat-option *ngFor="let op of listLoaiNhapXuat" [value]="op.ma_LoaiNX">
+          {{ op.ten_LoaiNX }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ion-col>
+
+  <ion-col size="7">
+    <mat-form-field appearance="fill">
+      <mat-label>Ngày</mat-label>
+      <input matInput name="ngay_Ct" [max]="today" [(ngModel)]="model.header.ngay_Ct" required [matDatepicker]="picker"
+        (focus)="picker.open()" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker touchUi color="primary"></mat-datepicker>
+    </mat-form-field>
+  </ion-col>
+
+  <ion-col size="5">
+    <mat-form-field appearance="fill">
+      <mat-label>Số Chứng từ</mat-label>
+      <input matInput readonly name="so_Ct" [(ngModel)]="model.header.so_Ct">
+    </mat-form-field>
+  </ion-col>
+
+
+  <ion-col size="12">
+    <mat-form-field appearance="fill">
+      <mat-label>Khách hàng</mat-label>
+      <input matInput name="ma_Dt" autocomplete="off" (focus)="openFilterCustomersModal()"
+        [(ngModel)]="model.header.ma_Dt" />
+      <button style="font-size: 18px" (click)="clearCus($event)" *ngIf="model.header?.ma_Dt" mat-icon-button matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+      <mat-hint align="end">{{ model.header?.ten_Dt }}</mat-hint>
+    </mat-form-field>
+  </ion-col>
+
+
+
+  <ion-col size="6">
+    <mat-form-field appearance="fill">
+      <mat-label>Mã nhân viên</mat-label>
+      <mat-select name="ma_cbnv" [(ngModel)]="model.header.ma_CbNv">
+        <mat-option *ngFor="let op of listEmployees" [value]="op.ma_CbNv">
+          {{ op.ten_CbNv }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ion-col>
+  <ion-col size="6">
+    <mat-form-field appearance="fill">
+      <mat-label>Mã bộ phận</mat-label>
+      <mat-select name="ma_Bp" [(ngModel)]="model.header.ma_Bp">
+        <mat-option *ngFor="let op of listDepartment" [value]="op.ma_Bp">
+          {{ op.ten_Bp }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ion-col>
+
+  <ng-container *ngIf="strMaCt != 'DC'">
+    <ion-col size="4" >
+      <mat-form-field appearance="fill">
+        <mat-label>Số SO</mat-label>
+        <mat-select name="so_SO" [(ngModel)]="model.header.so_Ct_SO">
+          <mat-option *ngFor="let op of listSO" [value]="op.so_Ct">
+            {{ op.so_Ct }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ion-col>
+  
+    <ion-col size="4">
+      <mat-form-field appearance="fill">
+        <mat-label>Số LSX</mat-label>
+        <mat-select name="so_LSX" [(ngModel)]="model.header.so_Ct_LSX">
+          <mat-option *ngFor="let op of listLSX" [value]="op.so_Ct">
+            {{ op.so_Ct }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ion-col>
+  
+    <ion-col size="4">
+      <mat-form-field appearance="fill">
+        <mat-label>Số KHSX</mat-label>
+        <mat-select name="so_KHSX" [(ngModel)]="model.header.so_Ct_KHSX">
+          <mat-option *ngFor="let op of listKHSX" [value]="op.so_Ct">
+            {{ op.so_Ct }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ion-col>
+  </ng-container>
+
+  <ion-col size="12">
+    <mat-form-field appearance="fill">
+      <mat-label>Diễn Giải</mat-label>
+      <textarea matInput name="dien_Giai" rows="3" [(ngModel)]="model.header.dien_Giai"></textarea>
+    </mat-form-field>
+  </ion-col>
+</ion-row>

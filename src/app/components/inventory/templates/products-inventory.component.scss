@@ -1,0 +1,21 @@
+::ng-deep {
+    ion-item {
+        ion-label {
+            p {
+                padding-top: 5px;
+
+                input {
+                    max-width: 100px;
+                    background-color:white;
+
+                    &.txt-giaitrinh {
+                        max-width: 100%;
+                        width: 100%;
+                        margin-bottom: 5px;
+                        
+                    }
+                }
+            }
+        }
+    }
+}

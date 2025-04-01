@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()" fill="clear">
+        <ion-icon name="close-outline" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-searchbar #searchBar [(ngModel)]="searchTerm" (ionChange)="filterDefect()" cancelButtonIcon=""
+      debounce="500" showCancelButton="never" placeholder="Tìm kiếm lỗi...">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ng-container *ngIf="!loading; else skeletonTmpl">
+    <ion-list class="mt-10">
+      <ion-radio-group [(ngModel)]="radioModel">
+        <ion-item *ngFor="let item of defects">
+          <ion-label class="ion-text-wrap">
+            <p>{{item.defectID}} - {{item.defectName}}</p>
+          </ion-label>
+          <ion-radio [value]="item.defectID" color="asp" slot="start" (click)="onChangeRadio(item)"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+  </ng-container>
+  <ng-template #skeletonTmpl>
+    <asp-skeleton></asp-skeleton>
+  </ng-template>
+</ion-content>
+<ion-footer>
+  <ion-button (click)="closeModal()">ĐÓNG</ion-button>
+</ion-footer>

@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()" fill="clear">
+        <ion-icon name="close-outline" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Chỉnh sửa vật tư</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="light" class="p-8">
+  <ion-grid>
+    <form role="form" #fdInfo="ngForm">
+      <ion-row>
+        <ion-col size="12">
+          <mat-form-field appearance="fill">
+            <mat-label>Vật tư</mat-label>
+            <input
+              readonly="true"
+              matInput
+              name="ma_Vt"
+              autocomplete="off"
+              [(ngModel)]="model.ma_Vt"
+            />
+            <mat-hint align="end">{{ model?.ten_Vt }}</mat-hint>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col size="12">
+          <mat-form-field appearance="fill">
+            <mat-label>Mã lô</mat-label>
+            <mat-select 
+              name="ma_Lo"
+              [(ngModel)]="model.ma_Lo">
+              <mat-option *ngFor="let op of listMa_Lo" [value]="op.ma_Lo">
+                {{ op.ma_Lo }}
+              </mat-option>
+            </mat-select>
+
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col size="12">
+          <mat-form-field appearance="fill">
+            <mat-label>Hạn sử dụng</mat-label>
+            <input
+              matInput
+              name="han_Sd"
+              [(ngModel)]="model.han_Sd"
+              required
+              [matDatepicker]="picker"
+              (focus)="picker.open()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker touchUi color="primary"></mat-datepicker>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col size="12">
+          <mat-form-field appearance="fill">
+            <mat-label>Mã sản phẩm</mat-label>
+            <mat-select
+              name="ma_Sp"
+              [(ngModel)]="model.ma_Sp">
+              <mat-option *ngFor="let op of listMa_Sp" [value]="op.ma_Sp">
+                {{ op.ma_Sp }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col size="12">
+          <mat-form-field appearance="fill">
+            <mat-label>Số lượng</mat-label>
+            <input
+              matInput
+              type="number"
+              name="so_Luong9"
+              autocomplete="off"
+              [(ngModel)]="model.so_Luong9"
+            />
+            <button
+              style="font-size: 18px"
+              *ngIf="model.so_Luong9"
+              mat-icon-button
+              matSuffix
+            >
+              <mat-icon>clear</mat-icon>
+            </button>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+</ion-content>
+
+<ion-footer color="bgcolor" class="bg-footer ion-no-border">
+  <ion-item color="bgcolor" class="ion-text-center pt-8 pb-8" lines="none">
+    <ion-label class="ion-no-padding ion-text-center ion-no-margin">
+      <ion-button
+        (click)="closeModal()"
+        expand="block"
+        size="default"
+        color="asp"
+      >
+        <span>Hoàn tất</span>
+        <ion-icon
+          name="checkmark-done-sharp"
+          slot="start"
+          size="default"
+        ></ion-icon>
+      </ion-button>
+    </ion-label>
+  </ion-item>
+</ion-footer>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ASP</string>
+    <string name="title_activity_main">ASP</string>
+    <string name="package_name">vn.asp.app</string>
+    <string name="custom_url_scheme">vn.asp.app</string>
+</resources>

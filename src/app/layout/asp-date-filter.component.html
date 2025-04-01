@@ -1,0 +1,13 @@
+<mat-card [ngClass]="classList">
+  <mat-card-actions>
+    <mat-button-toggle-group [value]="flagForButtonToggle" (change)="onButtonToggleChange($event)">
+      <mat-button-toggle value="from"><span class="text-primary">Từ:&nbsp;</span>{{setFormat(fromDate)}}
+      </mat-button-toggle>
+      <mat-button-toggle value="to"><span class="text-primary">Đến:&nbsp;</span>{{setFormat(toDate)}}
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </mat-card-actions>
+  <mat-calendar #calendar [minDate]="minDate" [maxDate]="maxDate" [comparisonStart]="campaignFrom"
+    [comparisonEnd]="campaignTo" [selected]="selectedDateRange" (selectedChange)="onSelectedChange($event)">
+  </mat-calendar>
+</mat-card>

@@ -1,0 +1,10 @@
+<div class="asp-search">
+  <ion-searchbar #searchBar [disabled]="disabled" [(ngModel)]="aspModel" [debounce]="debounce" [inputmode]="inputmode"
+    [animated]="animated" [showCancelButton]="showCancelButton" [type]="type" [placeholder]="placeholder"
+    [autocomplete]="autocomplete" (ionChange)="onIonChange($event)" (ionFocus)="onIonFocus($event)"
+    (ionClear)="onIonClear($event)" [ngModelOptions]="ngModelOptions" (ionCancel)="onIonCancel($event)" (ionBlur)="onIonBlur($event)">
+  </ion-searchbar>
+  <button mat-icon-button (click)="speechRequest()" color="primary" class="voice-button">
+    <mat-icon>keyboard_voice</mat-icon>
+  </button>
+</div>

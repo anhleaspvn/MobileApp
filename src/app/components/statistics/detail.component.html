@@ -1,0 +1,202 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button [fill]="'clear'" [routerLink]="['/components/statistics/list', 'LSX']">
+        <ion-icon slot="icon-only" ios="chevron-back-outline" md="arrow-back-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Công đoạn sản xuất</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen color="light" class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="loadMoreData($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ng-container *ngIf="!loading;else skeletonTmpl">
+    <ion-list class="info-top ion-margin-bottom product">
+      <ion-row>
+        <ion-col size="12" class="ion-text-center">
+          <ion-icon name="desktop-outline" [color]="'success'" size="large" class="icon">
+          </ion-icon>
+        </ion-col>
+        <ion-col size="5" class="ion-text-center">
+          <h3 class="">{{data[0]?.ma_Vt}} </h3>
+          <p class="t">{{data[0]?.ten_Vt}} </p>
+        </ion-col>
+        <ion-col size="2" class="ion-text-center">
+          <h3 class="title">{{data[0]?.so_Luong_Sp}} </h3>
+        </ion-col>
+        <ion-col size="2" class="ion-text-left">
+          <p>Số SO</p>
+          <p>Số KHSX</p>
+          <p>Số LSX</p>
+        </ion-col>
+        <ion-col size="3" class="ion-text-left">
+          <p>{{so_Ct_SO }}</p>
+          <p>{{so_Ct_KHSX}}</p>
+          <p>{{so_Ct_LSX }}</p>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+
+    <app-asp-search [(aspModel)]="searchTerm" (aspModelChange)="searChange()"></app-asp-search>
+    <ng-container *ngIf="perm?.allow_View">
+      <ion-list class="info-detail ion-margin-bottom product">
+        <ion-list-header>
+          <ion-label>
+            <p>Công đoạn</p>
+          </ion-label>
+        </ion-list-header>
+        <ion-item class="ion-no-margin" *ngFor="let item of data; let last = last;" [attr.lines]="!last?'full':'none'">
+          <ion-label class="no-margin-horizontal ion-no-padding" (click)="edit(item ,69)">
+            <p class="asp-color-medium">
+              {{item.ma_CongDoan? "Mã công đoạn: "+item.ma_CongDoan:""}}
+            </p>
+            <p class="asp-color-medium">
+              {{item.ma_ChiTietSp? "Mã chi tiết: "+ item.ma_ChiTietSp:""}}
+            </p>
+            <p class="asp-color-medium">
+              Tổng số lượng thống kê: {{item.so_Luong_ThongKe | number }}
+            </p>
+            <p class="asp-color-medium">
+              Tổng thời gian sản xuất: {{item.tong_Gio_SX}}
+            </p>
+          </ion-label>
+
+          <ion-note slot="end" class="ion-no-margin mt-15" color="success" mode="ios">
+            <ion-text class="ml-10 " color="success"> {{item.so_Luong_Dat | number}}</ion-text>
+          </ion-note>
+
+          <ion-button fill="clear" class="ml-10 ion-no-margin ion-no-padding" slot="end" color="primary"
+            *ngIf="perm?.allow_New" (click)="add(item)">
+            <ion-icon slot="icon-only" name="add-circle-outline" size="default"></ion-icon>
+          </ion-button>
+          <!-- <mat-menu #menu="matMenu"> [matMenuTriggerFor]="menu"
+            <button mat-menu-item (click)="edit(item, 78)">
+              <mat-icon>add</mat-icon>
+              <span>Thêm mới</span>
+            </button>
+            <button mat-menu-item (click)="edit(item ,69)">
+              <mat-icon>flip_to_front</mat-icon>
+              <span>Sửa</span>
+            </button>
+          </mat-menu> -->
+
+        </ion-item>
+      </ion-list>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #skeletonTmpl>
+    <ion-row class="info-top mt-20">
+      <span class="icon-top">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </span>
+      <ion-col size="12" text-center class="mt-20">
+        <ion-text color="medium">
+          <p class="title info-top-text">
+            <ion-skeleton-text animated style="width: 50%;margin: auto;"></ion-skeleton-text>
+          </p>
+        </ion-text>
+        <h4 class="total info-top-text">
+          <ion-skeleton-text animated style="width: 50%;margin: auto;"></ion-skeleton-text>
+        </h4>
+        <ion-text>
+          <ion-skeleton-text animated style="width: 50%;margin: auto;"></ion-skeleton-text>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
+    <ion-list lines="none" class="info-detail ion-margin-bottom">
+      <ion-item>
+        <ion-label class="ion-no-margin ion-no-padding">
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="ion-no-margin ion-no-padding">
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="ion-no-margin ion-no-padding">
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="ion-no-margin ion-no-padding">
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-list lines="none" class="info-detail ion-margin-bottom">
+      <ion-item>
+        <ion-label class="ion-no-margin ion-no-padding">
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="ion-no-margin ion-no-padding">
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="ion-no-margin ion-no-padding">
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-list lines="none" class="info-detail ion-margin-bottom">
+      <ion-item>
+        <ion-label class="ion-no-margin ion-no-padding">
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="ion-no-margin ion-no-padding">
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="ion-no-margin ion-no-padding">
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-list class="info-detail product">
+
+      <ion-list-header text-uppercase>
+        Sản phẩm
+      </ion-list-header>
+
+      <ion-item no-margin>
+        <ion-label no-margin-horizontal text-wrap no-padding>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+
+      <ion-item no-margin>
+        <ion-label no-margin-horizontal text-wrap no-padding>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+  </ng-template>
+
+</ion-content>

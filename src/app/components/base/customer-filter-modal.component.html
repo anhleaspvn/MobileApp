@@ -1,0 +1,41 @@
+<ion-header color="asp">
+  <ion-toolbar color="asp">
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()" fill="clear">
+        <ion-icon name="close-outline" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- <ion-searchbar #searchTermControl="ngModel" [(ngModel)]="searchTerm" (ionChange)="filter()" [ngModelOptions]="{standalone: true}" cancelButtonIcon="" debounce="500"
+      showCancelButton="never" placeholder="Tìm kiếm khách hàng...">
+    </ion-searchbar> -->
+    <app-asp-search [(aspModel)]="searchTerm" [ngModelOptions]="{standalone: true}" (aspModelChange)="filter()"
+      placeholder="Tìm kiếm khách hàng..." [autofocus]="true">
+    </app-asp-search>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ng-container *ngIf="!loading;else loadingTmpl">
+    <ion-list>
+      <ion-radio-group>
+        <ion-item *ngFor="let item of customers" detail="false" button="true" (click)="onSelectedItem(item)">
+          <!-- <ion-radio slot="start" color="asp" (ionFocus)="onChangeRadio(item.ma_Dt)" [value]="item.ma_Dt">
+          </ion-radio> -->
+          <ion-label>
+            <h2>{{item.ten_Dt}}&nbsp;({{item.ma_Dt}})</h2>
+            <p>{{item.ten_Nh_Dt}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+  </ng-container>
+
+  <ng-template #loadingTmpl>
+    <asp-skeleton></asp-skeleton>
+  </ng-template>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

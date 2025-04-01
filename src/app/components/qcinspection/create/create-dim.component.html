@@ -1,0 +1,155 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button [fill]="'clear'" [routerLink]="['/components/qcinspection/list']">
+        <ion-icon slot="icon-only" ios="chevron-back-outline" md="arrow-back-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Tạo mới Dim Function</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="form-row">
+    <mat-form-field appearance="fill">
+      <mat-label>ID</mat-label>
+      <input matInput name="iqcCheckID" [(ngModel)]="model.iqcCheckID" 
+      (focus)="openStageExsFilterModal()" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Mã công đoạn</mat-label>
+      <input matInput name="iqcDFID" [(ngModel)]="iqcDFID" 
+        required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Hạng mục kiểm tra</mat-label>
+      <input matInput name="iqcCheckingContent" [(ngModel)]="model.iqcCheckingContent" 
+      (focus)="openCheckListFilterModal()" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Tiêu chuẩn MIN</mat-label>
+      <input matInput name="iqcStandardMin" [(ngModel)]="iqcStandardMin"
+        required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Tiêu chuẩn MAX</mat-label>
+      <input matInput name="iqcStandardMax" [(ngModel)]="iqcStandardMax"
+        required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Thời gian kiểm tra</mat-label>
+      <mat-select [(ngModel)]="iqcEvalueCheckTime">
+        <mat-option value="6H-8H">6H-8H</mat-option>
+        <mat-option value="8H-10H">8H-10H</mat-option>
+        <mat-option value="10H-12H">10H-12H</mat-option>
+        <mat-option value="13H-15H">13H-15H</mat-option>
+        <mat-option value="15H-17H">15H-17H</mat-option>
+        <mat-option value="18H-20H">18H-20H</mat-option>
+      </mat-select>
+      
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Mã thiết bị</mat-label>
+      <input matInput name="iqcDeviceID" [(ngModel)]="iqcDeviceID">
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Mã dụng cụ đo</mat-label>
+      <input matInput name="iqcMeasuringToolID" [(ngModel)]="iqcMeasuringToolID">
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Thực tế kiểm tra 1</mat-label>
+      <input matInput name="iqcEvalueActual1" [(ngModel)]="iqcEvalueActual1" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+    <mat-label>Thực tế kiểm tra 2</mat-label>
+    <input matInput name="iqcEvalueActual2" [(ngModel)]="iqcEvalueActual2">
+    <button style="font-size: 18px;" mat-icon-button
+      matSuffix>
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+  <mat-label>Thực tế kiểm tra 3</mat-label>
+  <input matInput name="iqcEvalueActual3" [(ngModel)]="iqcEvalueActual3">
+  <button style="font-size: 18px;" mat-icon-button
+    matSuffix>
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-form-field>
+<mat-form-field appearance="fill">
+  <mat-label>Thực tế kiểm tra 4</mat-label>
+  <input matInput name="iqcEvalueActual4" [(ngModel)]="iqcEvalueActual4">
+  <button style="font-size: 18px;" mat-icon-button
+    matSuffix>
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-form-field>
+<mat-form-field appearance="fill">
+  <mat-label>Thực tế kiểm tra 5</mat-label>
+  <input matInput name="iqcEvalueActual5" [(ngModel)]="iqcEvalueActual5">
+  <button style="font-size: 18px;" mat-icon-button
+    matSuffix>
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-form-field>
+<mat-form-field appearance="fill" style="background-color: lightblue;">
+  <mat-label>Phán định</mat-label>
+  <mat-select [(ngModel)]="iqcEvalueResult">
+    <mat-option value="OK">OK</mat-option>
+    <mat-option value="NG">NG</mat-option>
+  </mat-select>
+  <button style="font-size: 18px;" mat-icon-button
+    matSuffix>
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-form-field>
+  </div>
+</ion-content>
+<ion-footer>
+  <div>
+    <ion-item color="bgcolor" class="ion-text-center pt-8 pb-8" lines="none">
+      <ion-label class="ion-no-padding ion-text-center ion-no-margin">
+        <ion-button (click)="onSubmit()" expand="block" size="default" color="asp">
+          <span>Lưu</span>
+          <ion-spinner slot="start" size="default" *ngIf="submitting"></ion-spinner>
+          <ion-icon name="checkmark-done-sharp" slot="start" size="default" *ngIf="!submitting"></ion-icon>
+        </ion-button>
+      </ion-label>
+    </ion-item>
+  </div>
+</ion-footer>

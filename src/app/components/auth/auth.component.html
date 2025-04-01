@@ -1,0 +1,51 @@
+<ion-content [fullscreen]="true" padding id="auth-page">
+
+  <form role="form" [formGroup]="authForm" (ngSubmit)="authForm.valid && login(authForm)">
+    
+    <div class="form-header ion-text-center mt-40 ion-margin-bottom">
+      <img src="/assets/images/airpeed.jpg">
+    </div>
+    <div class="ion-margin-top p-20">
+
+      <div class="standard">
+
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Tài khoản</mat-label>
+          <mat-icon matPrefix color="primary" class="mr-5">person</mat-icon>
+          <input matInput autocomplete="off" name="username" matInputAutofocus formControlName="username" required #txtUsername
+            [(ngModel)]="username" />
+          <button type="button" class="asp-color-medium" *ngIf="username" mat-icon-button matSuffix
+            (click)="username=''" aria-label="Xóa" aria-pressed="true">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Mật khẩu</mat-label>
+          <mat-icon matPrefix color="primary" class="mr-5">vpn_key</mat-icon>
+          <input matInput autocomplete="off" [type]="hide ? 'password' : 'text'" name="password" formControlName="password" required
+            #txtPassword>
+          <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon class="asp-color-medium">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="form-action">
+        <button class="float-right" [disabled]="!authForm.valid || submitting" (click)="login(authForm)"
+          mat-raised-button color="primary">Đăng nhập</button>
+        <a href="javascript:void(0)" (click)="forgotPassword($event)" class="mt-16 asp-color-medium">Quên mật
+          khẩu?</a>
+      </div>
+      <mat-progress-bar *ngIf="submitting" mode="indeterminate" color="primary"></mat-progress-bar>
+    </div>
+  </form>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="ion-text-center copyright">
+      Copyright © {{year}} <a href="https://airspeedllc.com" target="_blank">AIRSPEED</a>
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>

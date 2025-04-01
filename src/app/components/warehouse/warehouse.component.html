@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <!-- <ion-back-button defaultHref="/tabs/home" text=""></ion-back-button> -->
+      <ion-button [fill]="'clear'" routerLink="/tabs/home">
+        <ion-icon slot="icon-only" ios="chevron-back-outline" md="arrow-back-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Danh sách kho</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" [scrollX]="true">
+  <ion-grid>
+    <ion-row>
+
+      <ion-refresher slot="fixed" (ionRefresh)="loadMoreData($event,true)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+      <ng-container *ngIf="!loading; else elseTemplate">
+
+        <ion-col size="12">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>
+                <span [style.paddingLeft.px]="24">&nbsp;</span>
+              </th>
+              <td mat-cell *matCellDef="let data" >
+                <button mat-icon-button [style.visibility]="!data.expandable ? 'hidden' : ''"
+                  [style.marginLeft.px]="data.level * 8" (click)="treeControl.toggle(data)">
+                  <mat-icon class="mat-icon-rtl-mirror">
+                    {{treeControl.isExpanded(data) ? 'expand_more' : 'chevron_right'}}
+                  </mat-icon>
+                </button>
+                <span (click)="goToDetail(data)">{{data.name}}</span>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </ion-col>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <ion-col size="12">
+          <asp-skeleton></asp-skeleton>
+        </ion-col>
+      </ng-template>
+
+
+    </ion-row>
+  </ion-grid>
+</ion-content>

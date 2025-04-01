@@ -1,0 +1,16 @@
+ion-item{
+    ion-label{
+        font-size: 11pt;
+    }
+    .title{
+        font-size: 10pt;
+    }
+    .body{
+        max-width: 70%;
+        text-align: right;
+        white-space: normal !important;
+    }
+}
+.info,.product-detail{
+    border-radius: 4px;
+}

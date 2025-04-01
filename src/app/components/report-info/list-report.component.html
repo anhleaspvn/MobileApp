@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button [fill]="'clear'" routerLink="/tabs/report">
+        <ion-icon slot="icon-only" ios="chevron-back-outline" md="arrow-back-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">
+      {{strTitle}}
+    </ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list class="mt-16">
+    <ion-item *ngFor="let nav of navs" [detail]="true" (click)="gotoReport(nav)">
+      <ion-icon class="icon" [ios]="nav.iconName+ '-outline'" [md]="nav.iconName+'-sharp'" color="asp"></ion-icon>
+      <ion-label class="ml-5" > {{nav.title}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
