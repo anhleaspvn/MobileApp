@@ -29,7 +29,9 @@ export class EmpScanService {
     SaveInEmpByQRCode: "/EmpScan/SaveInEmpByQRCode",
     UpdateEmpCheckIn: "/EmpScan/UpdateEmpCheckIn",
     SaveMachineByQRCode: "/EmpScan/SaveMachineByQRCode",
-    GetWODocNoListByLine: "/EmpScan/GetWODocNoListByLine"
+    GetWODocNoListByLine: "/EmpScan/GetWODocNoListByLine",
+    GetMachineInsByLine: "/EmpScan/GetMachineInsByLineV2",
+    UpdateMachineInsByLine: "/EmpScan/UpdateMachineInsByLine"
   };
   constructor(private http: HttpClient, private apiService: ApiService) {}
   
@@ -139,6 +141,28 @@ export class EmpScanService {
     };
     const res = await this.apiService.get(this.urlSegement.GetWODocNoListByLine, params);
     
+    return res;
+  }
+
+  async GetMachineInsByLine(userName: any, fromDate: any, toDate: any, autoID: any){
+    const params = {
+      userName: userName,
+      fromDate: fromDate,
+      toDate: toDate,
+      autoID: autoID
+    }
+    
+    const res = await this.apiService.post(this.urlSegement.GetMachineInsByLine, params);
+
+    return res;
+  }
+
+  async UpdateMachineInsByLine(data: any = []){
+    const params = {
+      data: data
+    }
+    const res = await this.apiService.post(this.urlSegement.UpdateMachineInsByLine, params);
+
     return res;
   }
 }

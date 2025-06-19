@@ -146,7 +146,7 @@ export class HomeComponent implements OnInit, PageLifeCycle {
     // );
     this.router.navigate(
       [
-        fn.routerLink +
+        fn.routerLink.trim() +
         (fn?.params ? `/${fn.params?.split(",")?.join("/")}` : ""),
       ],
       { queryParams: { [AppConfig.OBJ_ID_QUERY_KEY]: fn?.object_ID } }

@@ -9,6 +9,8 @@ import { FilterStageModalComponent } from './filter-stage-modal.component';
 import { ListMachineComponent } from './list-machine.component';
 import { FilterEmpModalComponent } from './filter-emp-modal.component';
 import {FilterMulEmpModalComponent} from './filter-mulemp-modal.component';
+import { ListInsMachineComponent } from './list-ins-machine.component';
+import { DetailInsMachineComponent } from './detail-ins-machine.component';
 
 const routing: ModuleWithProviders<ProdscanqrcodeModule> = RouterModule.forChild([
   {
@@ -19,12 +21,22 @@ const routing: ModuleWithProviders<ProdscanqrcodeModule> = RouterModule.forChild
     path: 'list-machine',
     component: ListMachineComponent,
   },
+  {
+    path: 'list-ins-machine',
+    component: ListInsMachineComponent
+  },
+  {
+    path: 'detail-ins-machine/:autoID',
+    component: DetailInsMachineComponent
+  }
 ]);
 
 @NgModule({
   declarations: [
     ListComponent,
     ListMachineComponent,
+    ListInsMachineComponent,
+    DetailInsMachineComponent,
     FilterWoModalComponent,
     FilterStageModalComponent,
     FilterEmpModalComponent,
