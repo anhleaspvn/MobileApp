@@ -6,8 +6,8 @@ import { Location as AngularLocation } from '@angular/common';
 
 import { AlertController, IonRouterOutlet, Platform } from "@ionic/angular";
 import { environment } from '../environments/environment';
-import { UtilityService } from "./shared/utility.service";
-import { NetworkService } from "./shared/network.service";
+import { UtilityService } from "src/app/shared/utils/utility.service";
+import { NetworkService } from "src/app/core/network/network.service";
 
 import { mapTo, debounceTime } from "rxjs/operators";
 

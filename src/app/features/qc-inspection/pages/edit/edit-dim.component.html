@@ -1,0 +1,180 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button [fill]="'clear'" (click)="view_backdim()">
+        <ion-icon slot="icon-only" ios="chevron-back-outline" md="arrow-back-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Chỉnh sửa Dim Function</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="form-row">
+    <mat-form-field appearance="fill">
+      <mat-label>ID</mat-label>
+      <input matInput name="iqcCheckID" [(ngModel)]="model.iqcCheckID" (focus)="openStageExsFilterModal()" required
+        readonly>
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="clearIqcCheckID(); $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill" *ngIf="model.iqcCheckID === 'STEP34'">
+      <mat-label>Mô tả</mat-label>
+      <input matInput name="description" [(ngModel)]="description" required>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Mã công đoạn</mat-label>
+      <input matInput name="iqcDFID" [(ngModel)]="iqcDFID" (focus)="openStageFilterModal()" required readonly>
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="clearStage(); $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill" *ngIf="stageName">
+      <mat-label>Tên công đoạn</mat-label>
+      <input matInput name="stageName" [(ngModel)]="stageName" readonly>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Hạng mục kiểm tra</mat-label>
+      <input matInput name="iqcCheckingContent" [(ngModel)]="model.iqcCheckingContent"
+        (focus)="openCheckListFilterModal()" required>
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="clearCheckingContent(); $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Tiêu chuẩn MIN</mat-label>
+      <input matInput name="iqcStandardMin" [(ngModel)]="iqcStandardMin" (ngModelChange)="autoCheckResult()" required>
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="clearStandardMin(); $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Tiêu chuẩn MAX</mat-label>
+      <input matInput name="iqcStandardMax" [(ngModel)]="iqcStandardMax" (ngModelChange)="autoCheckResult()" required>
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="clearStandardMax(); $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Chọn ca</mat-label>
+      <mat-select [(ngModel)]="iqcShiftID" (selectionChange)="onShiftChange()">
+        <mat-option value="DayShift">Ca ngày</mat-option>
+        <mat-option value="NightShift">Ca đêm</mat-option>
+      </mat-select>
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="clearShiftID(); $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Thời gian kiểm tra</mat-label>
+      <mat-select [(ngModel)]="iqcPeriodTime">
+        <mat-option *ngFor="let item of periodTime" [value]="item.timeFrame">
+          {{ item.timeFrame }}
+        </mat-option>
+      </mat-select>
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="clearPeriodTime(); $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Trạng thái kiểm tra</mat-label>
+      <mat-select [(ngModel)]="iqcCheckState">
+        <mat-option value="">-- Trống --</mat-option>
+        <mat-option value="SC">SC</mat-option>
+        <mat-option value="CC">CC</mat-option>
+        <mat-option value="HI">HI</mat-option>
+        <mat-option value="OS">OS</mat-option>
+      </mat-select>
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="iqcCheckState = ''; $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Mã thiết bị</mat-label>
+      <input matInput name="iqcDeviceID" [(ngModel)]="iqcDeviceID" (focus)="openDeviceFilterModal()" required readonly>
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="clearDevice(); $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill" *ngIf="deviceName">
+      <mat-label>Tên thiết bị</mat-label>
+      <input matInput name="deviceName" [(ngModel)]="deviceName" readonly>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Mã dụng cụ đo</mat-label>
+      <input matInput name="iqcMeasuringToolID" [(ngModel)]="iqcMeasuringToolID" (focus)="openMeasuringToolFilterModal()" readonly>
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="clearMeasuringTool(); $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill" *ngIf="measuringToolName">
+      <mat-label>Tên dụng cụ đo</mat-label>
+      <input matInput name="measuringToolName" [(ngModel)]="measuringToolName" readonly>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Mã dao</mat-label>
+      <input matInput name="iqcCutterID" [(ngModel)]="iqcCutterID">
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="iqcCutterID = ''; $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Thực tế kiểm tra 1</mat-label>
+      <input matInput name="iqcEvalueActual1" [(ngModel)]="iqcEvalueActual1" (ngModelChange)="autoCheckResult()" required>
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="clearEvalueActual1(); $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Thực tế kiểm tra 2</mat-label>
+      <input matInput name="iqcEvalueActual2" [(ngModel)]="iqcEvalueActual2" (ngModelChange)="autoCheckResult()">
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="clearEvalueActual2(); $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Thực tế kiểm tra 3</mat-label>
+      <input matInput name="iqcEvalueActual3" [(ngModel)]="iqcEvalueActual3" (ngModelChange)="autoCheckResult()">
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="clearEvalueActual3(); $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Thực tế kiểm tra 4</mat-label>
+      <input matInput name="iqcEvalueActual4" [(ngModel)]="iqcEvalueActual4" (ngModelChange)="autoCheckResult()">
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="clearEvalueActual4(); $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Thực tế kiểm tra 5</mat-label>
+      <input matInput name="iqcEvalueActual5" [(ngModel)]="iqcEvalueActual5" (ngModelChange)="autoCheckResult()">
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="clearEvalueActual5(); $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill" style="background-color: lightblue;">
+      <mat-label>Phán định</mat-label>
+      <mat-select [(ngModel)]="iqcEvalueResult">
+        <mat-option value="OK">OK</mat-option>
+        <mat-option value="NG">NG</mat-option>
+      </mat-select>
+      <button style="font-size: 18px;" mat-icon-button matSuffix (click)="clearEvalueResult(); $event.stopPropagation()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</ion-content>
+<ion-footer>
+  <div>
+    <ion-item color="bgcolor" class="ion-text-center pt-8 pb-8" lines="none">
+      <ion-label class="ion-no-padding ion-text-center ion-no-margin">
+        <ion-button (click)="onSubmit()" expand="block" size="default" color="asp" [disabled]="submitting">
+          <span>Lưu</span>
+          <ion-spinner slot="start" size="default" *ngIf="submitting"></ion-spinner>
+          <ion-icon name="checkmark-done-sharp" slot="start" size="default" *ngIf="!submitting"></ion-icon>
+        </ion-button>
+      </ion-label>
+    </ion-item>
+  </div>
+</ion-footer>

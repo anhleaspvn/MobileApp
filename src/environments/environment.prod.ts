@@ -1,6 +1,8 @@
 export const environment = {
   production: true,
   IONIC_HTTP_PROXY: 'http://192.168.10.2/api',
+  // baseUrl: 'http://192.168.10.2/api',
+  // baseResources: 'http://192.168.10.2/resources/file',
   baseUrl: 'https://api1.airspeedmfg.com.vn:449/api',
   baseResources: 'https://api1.airspeedmfg.com.vn:449/resources/file',
   token: {

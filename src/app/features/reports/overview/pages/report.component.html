@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-title class="ion-text-center">
+      Báo cáo
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list class="mt-16">
+    <ion-item *ngFor="let nav of navs" [detail]="true" (click)="gotoListReport(nav)">
+      <ion-icon class="icon" [ios]="nav.iconName+ '-outline'" [md]="nav.iconName+'-sharp'" color="asp"></ion-icon>
+      <ion-label class="ml-5" > {{nav.title}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

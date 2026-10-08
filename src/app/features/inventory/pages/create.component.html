@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button [fill]="'clear'" routerLink="../list">
+        <ion-icon slot="icon-only" ios="chevron-back-outline" md="arrow-back-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Tạo kiểm kê</ion-title>
+    <!-- <ion-buttons slot="end" fill="clear">
+      <ion-button (click)="startScan()">
+        <ion-icon slot="icon-only" ios="qr-code-outline" md="qr-code-sharp" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="light" class="p-8">
+  <ion-row>
+    <ion-col size="12">
+      <mat-horizontal-stepper labelPosition="bottom" [linear]="linner" #stepper>
+
+        <mat-step [stepControl]="fdInfo.control">
+          <ng-template matStepLabel>Thông tin</ng-template>
+          <form role="form" #fdInfo="ngForm">
+            <!-- <app-guarantee-products [(model)]="productModel">
+            </app-guarantee-products> -->
+
+            <div class="p-8">
+
+              <div class="form-row">
+                <mat-form-field appearance="fill">
+                  <mat-label>Kho</mat-label>
+                  <input matInput name="ma_Kho" [(ngModel)]="model.ma_Kho" required
+                    (focus)="openInventoriesFilterModal()">
+                  <button style="font-size: 18px;" (click)="clearInventory($event)" *ngIf="model.ma_Kho" mat-icon-button
+                    matSuffix>
+                    <mat-icon>clear</mat-icon>
+                  </button>
+                  <mat-hint align="end">{{inventory?.ten_Kho}}</mat-hint>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="fill">
+                  <mat-label>Ngày</mat-label>
+                  <input matInput name="ngay_Kk" [max]="today" [(ngModel)]="model.ngay_Kk" required
+                    [matDatepicker]="picker" (focus)="picker.open()">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker touchUi color="primary"></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+              <!-- <div class="form-row">
+                <mat-form-field appearance="fill">
+                  <mat-label>Nhóm vật tư</mat-label>
+                  <input matInput name="ma_Nh_Vt" [(ngModel)]="model.ma_Nh_Vt">
+                  <button style="font-size: 18px;" *ngIf="model.ma_Nh_Vt" mat-icon-button matSuffix>
+                    <mat-icon>clear</mat-icon>
+                  </button>
+                  <mat-hint align="end"></mat-hint>
+                </mat-form-field>
+              </div> -->
+
+              <div class="form-row">
+                <mat-form-field appearance="fill">
+                  <mat-label>Ghi chú</mat-label>
+                  <textarea matInput name="ghi_Chu" rows="4" [(ngModel)]="model.ghi_Chu"></textarea>
+                </mat-form-field>
+              </div>
+
+            </div>
+
+            <div class="form-row p-5" align="end">
+              <button mat-raised-button matStepperNext color="primary" [disabled]="fdInfo.invalid">Tiếp theo</button>
+            </div>
+
+          </form>
+        </mat-step>
+
+        <mat-step>
+          
+          <ng-template matStepLabel>Sản phẩm</ng-template>
+          <app-products-inventory [model]="model" [products]="products" [(productsModel)]="productsModel">
+          </app-products-inventory>
+        </mat-step>
+
+      </mat-horizontal-stepper>
+    </ion-col>
+  </ion-row>
+</ion-content>
+
+<ion-footer *ngIf="stepper.selectedIndex == 1" color="bgcolor" class="bg-footer ion-no-border">
+  <ion-item color="bgcolor" class="ion-text-center pt-8 pb-8" lines="none">
+    <ion-label class="ion-no-padding ion-text-center ion-no-margin">
+      <ion-button (click)="onSubmit()" expand="block" size="default" color="asp"
+        [disabled]="fdInfo.invalid || !productsModel || productsModel.length==0 || submitting">
+        <span>Lưu</span>
+        <ion-spinner slot="start" size="default" *ngIf="submitting"></ion-spinner>
+        <ion-icon name="checkmark-done-sharp" slot="start" size="default" *ngIf="!submitting"></ion-icon>
+      </ion-button>
+    </ion-label>
+  </ion-item>
+</ion-footer>

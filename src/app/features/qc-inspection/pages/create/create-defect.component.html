@@ -1,0 +1,50 @@
+﻿<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button [fill]="'clear'" (click)=view_exinsdetail()>
+        <ion-icon slot="icon-only" ios="chevron-back-outline" md="arrow-back-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Tạo mới Defects</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="form-row">
+    <mat-form-field appearance="fill">
+      <mat-label>Mã Defect</mat-label>
+      <input matInput name="defectID" [(ngModel)]="model.defectID" 
+      (focus)="openDefectFilterModal()" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Số lượng</mat-label>
+      <input matInput name="defectQuantity" [(ngModel)]="defectQuantity" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Mô tả</mat-label>
+      <input matInput name="defectDescription" [(ngModel)]="defectDescription" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</ion-content>
+<ion-footer>
+  <div style="display: flex; gap: 10px;">
+  <ion-button (click)="onSubmit()" expand="block" style="flex: 1;" color="asp" [disabled]="submitting">
+    <ion-spinner slot="start" size="small" *ngIf="submitting"></ion-spinner>
+    Lưu
+  </ion-button>
+  <ion-button (click)="onClose()" expand="block" style="flex: 1;" color="asp">
+    Đóng
+  </ion-button>
+</div>
+</ion-footer>

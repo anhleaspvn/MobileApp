@@ -1,0 +1,15 @@
+.basic-container {
+    padding: 20px;
+    
+  }
+  
+  
+  ::ng-deep {
+    td.mat-cell:first-of-type {
+        padding-left: 3px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-right: 16px;
+    }
+}  

@@ -1,0 +1,147 @@
+﻿<ion-header [translucent]="true">
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button [fill]="'clear'" [routerLink]="['/components/qcinspection/list']">
+        <ion-icon slot="icon-only" ios="chevron-back-outline" md="arrow-back-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Chi tiết Dim Function{{ checkState ? ' - ' + checkState : '' }}</ion-title>
+    <ion-buttons slot="end" fill="clear">
+      <ion-button>
+        <i class="material-icons">sort_by_alpha</i>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="loadMoreData($event,true)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+   <div class="table-responsive">
+    <ng-container *ngIf="!loading; else elseTemplate">    
+      <ion-list class="mt-0 pt-0 border-list">
+        <!-- Styled Header Item with matching Slot Start to fix alignment -->
+        <ion-item class="header-item" lines="full">
+          <ion-button fill="clear" slot="start" class="invisible-placeholder-btn">
+            <ion-icon name="desktop-outline"></ion-icon>
+          </ion-button>          <ion-grid class="ion-no-padding">
+            <ion-row class="header-row">
+              <ion-col [style.width.px]="colWidths[0]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="0"><b>Nội dung kiểm tra</b></ion-col>
+              <ion-col [style.width.px]="colWidths[1]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="1"><b>Mã công đoạn</b></ion-col>
+              <ion-col [style.width.px]="colWidths[2]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="2"><b>Hạng mục KT</b></ion-col>
+              <ion-col [style.width.px]="colWidths[3]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="3"><b>Thiết bị đo</b></ion-col>
+              <ion-col [style.width.px]="colWidths[4]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="4"><b>Dụng cụ đo</b></ion-col>
+              <ion-col [style.width.px]="colWidths[5]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="5"><b>Mã dao</b></ion-col>
+              <ion-col [style.width.px]="colWidths[6]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="6"><b>TC MIN</b></ion-col>
+              <ion-col [style.width.px]="colWidths[7]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="7"><b>TC MAX</b></ion-col>
+              <ion-col [style.width.px]="colWidths[8]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="8"><b>Thời gian KT</b></ion-col>
+              <ion-col [style.width.px]="colWidths[9]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="9"><b>Trạng thái KT</b></ion-col>
+              <ion-col [style.width.px]="colWidths[10]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="10"><b>Kiểm tra 1</b></ion-col>
+              <ion-col [style.width.px]="colWidths[11]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="11"><b>Kiểm tra 2</b></ion-col>
+              <ion-col [style.width.px]="colWidths[12]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="12"><b>Kiểm tra 3</b></ion-col>
+              <ion-col [style.width.px]="colWidths[13]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="13"><b>Kiểm tra 4</b></ion-col>
+              <ion-col [style.width.px]="colWidths[14]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="14"><b>Kiểm tra 5</b></ion-col>
+              <ion-col [style.width.px]="colWidths[15]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="15"><b>Phán định</b></ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+        <ion-item *ngFor="let item of data;trackBy:trackBy">
+          <ion-button fill="clear" [matMenuTriggerFor]="menu" slot="start" color="medium">
+            <ion-icon slot="start" *ngIf="item.is_App;else desktopIcon" name="phone-portrait-outline"
+              color="asp">
+            </ion-icon>
+          </ion-button>
+          <ng-template #desktopIcon>
+            <ion-icon slot="start" name="desktop-outline" color="asp"></ion-icon>
+          </ng-template>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [disabled]="isLocked" (click)="view_edit(item)" detail="true">
+              <mat-icon>edit</mat-icon>
+              <span>Sửa</span>
+            </button>
+            <button mat-menu-item [disabled]="isLocked" (click)="delete(item)" detail="true">
+              <mat-icon>delete</mat-icon>
+              <span>Xoá</span>
+            </button>
+          </mat-menu>
+          <ion-grid class="ion-no-padding">
+            <!-- Data Row with Matching Column Sizes -->
+            <ion-row class="data-row">
+              <ion-col [style.width.px]="colWidths[0]" style="flex: 0 0 auto;" class="text-truncate">
+                {{item.iqcCheckName}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[1]" style="flex: 0 0 auto;" class="text-truncate">
+                {{item.iqcDFID ?? item.iqcdfid}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[2]" style="flex: 0 0 auto;" class="text-truncate">
+                {{item.iqcCheckingContent}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[3]" style="flex: 0 0 auto;" class="text-monospace">
+                {{item.iqcDeviceID}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[4]" style="flex: 0 0 auto;" class="text-monospace">
+                {{item.iqcMeasuringToolID}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[5]" style="flex: 0 0 auto;" class="text-monospace">
+                {{item.iqcCutterID ?? item.IQCCutterID ?? item.iqccutterid}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[6]" style="flex: 0 0 auto;">
+                {{item.iqcStandardMin | number}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[7]" style="flex: 0 0 auto;">
+                {{item.iqcStandardMax | number}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[8]" style="flex: 0 0 auto;">
+                {{item.iqcEvalueCheckTime}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[9]" style="flex: 0 0 auto;" class="text-truncate">
+                {{item.checkState ?? item.CheckState}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[10]" style="flex: 0 0 auto;" class="text-blue font-bold">
+                {{item.evalue1}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[11]" style="flex: 0 0 auto;" class="text-blue font-bold">
+                {{item.evalue2}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[12]" style="flex: 0 0 auto;" class="text-blue font-bold">
+                {{item.evalue3}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[13]" style="flex: 0 0 auto;" class="text-blue font-bold">
+                {{item.evalue4}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[14]" style="flex: 0 0 auto;" class="text-blue font-bold">
+                {{item.evalue5}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[15]" style="flex: 0 0 auto;">
+                <span class="badge" [ngClass]="item.iqcEvalueResult === 'OK' ? 'badge-ok' : 'badge-ng'">
+                  {{item.iqcEvalueResult}}
+                </span>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <!-- <ion-label class="ion-no-padding">
+            <h3>
+              {{item.iqcCheckName}}
+            </h3>
+            <p>{{item.iqcDFID}}</p>
+            <p>{{item.iqcStandardMin | number}}</p>
+            <p>{{item.iqcStandardMax | number}}</p>
+            <p>{{item.iqcCheckingContent}}</p>
+          </ion-label>
+          <ion-note slot="end">
+            <span class="asp-color-medium">
+              <p style="color: red;">{{item.iqcEvalueActual | number}}</p>
+              <p style="color: red;">{{item.iqcEvalueResult}}</p>
+              <p style="color: red;">{{item.iqcEvalueCheckTime}}</p>
+              <p style="color: blue">{{item.iqcDeviceID}}</p>
+              <p style="color: blue">{{item.iqcMeasuringToolID}}</p>
+            </span>
+          </ion-note> -->
+        </ion-item>
+      </ion-list>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <asp-skeleton></asp-skeleton>
+    </ng-template>
+   </div>
+</ion-content>

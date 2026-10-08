@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()" fill="clear">
+        <ion-icon ios="close-outline" md="close-sharp" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="text-align:center">Thông báo</ion-title>
+    <ion-buttons slot="end" >
+      <ion-button [fill]="'clear'" (click)="readAll()">
+        <ion-icon ios="checkmark-done-outline" md="checkmark-done-outline" size="lager"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="loadMoreData($event, true)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list-header>
+    <ion-label>
+      <p>Tổng:&nbsp;<span style="font-size: 14px;" text-bold>{{totalNotifi | number}}</span></p>
+    </ion-label>
+  </ion-list-header>
+
+  <ion-grid>
+    <ng-container *ngIf="!loading; else elseTemplate">
+      <ion-list>
+        <ion-item *ngFor="let item of datanotifi; trackBy: trackBy" detail="false" [style.--background]="item.color">
+          <ion-avatar slot="start">
+            <img [src]="item.isRead? '../../../../assets/images/noavatar-male.png':'../../../../assets/images/no-avatar.png'">
+          </ion-avatar>
+          <ion-label class="ion-no-margin ion-no-padding">
+            <h3>{{item.title}}</h3>
+            <p>{{item.description}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+
+    <ng-template #elseTemplate>
+      <asp-skeleton></asp-skeleton>
+    </ng-template>
+  </ion-grid>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

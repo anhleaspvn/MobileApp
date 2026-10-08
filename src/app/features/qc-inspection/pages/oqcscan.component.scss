@@ -1,0 +1,87 @@
+﻿// oqcscan.component.scss
+
+.auto-scan-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .status-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    ion-icon {
+      font-size: 24px;
+      animation: rotate 2s linear infinite;
+    }
+
+    strong {
+      font-size: 16px;
+    }
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// 👉 Đảm bảo floating button luôn hiển thị trên cùng
+ion-fab {
+  z-index: 99999 !important;
+  
+  ion-fab-button {
+    --box-shadow: 0 4px 16px rgba(var(--ion-color-danger-rgb), 0.5);
+    width: 70px;
+    height: 70px;
+
+    ion-icon {
+      font-size: 36px;
+    }
+  }
+}
+
+// 👉 Animation cho floating button
+ion-fab-button {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+// Styling cho card
+ion-card {
+  ion-item {
+    --padding-start: 0;
+  }
+}
+
+ion-button {
+  text-transform: none;
+  font-weight: 600;
+}
+
+// Style cho alert header
+::ng-deep .custom-alert-header {
+  .alert-head {
+    h2 {
+      color: red !important;
+      font-weight: bold !important;
+    }
+  }
+  
+  .alert-title {
+    color: red !important;
+    font-weight: bold !important;
+  }
+}

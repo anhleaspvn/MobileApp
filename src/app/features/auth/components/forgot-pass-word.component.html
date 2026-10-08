@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()" fill="clear">
+        <ion-icon name="close-outline" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Quên mật khẩu</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" padding id="auth-page">  
+
+  <form role="form" [formGroup]="authForm" (ngSubmit)="authForm.valid && onSubmit(authForm)">
+    
+    <div class="form-header ion-text-center mt-40 ion-margin-bottom">
+      <img src="/assets/images/logo_footer.png">
+    </div>
+    <div class="ion-margin-top p-20">
+
+      <div class="standard">
+
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Tài khoản</mat-label>
+          <mat-icon matPrefix color="primary" class="mr-5">person</mat-icon>
+          <input matInput autocomplete="off" name="username" matInputAutofocus formControlName="username" required #txtUsername
+            [(ngModel)]="username" />
+          <button type="button" class="asp-color-medium" *ngIf="username" mat-icon-button matSuffix
+            (click)="username=''" aria-label="Xóa" aria-pressed="true">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Email</mat-label>
+          <mat-icon matPrefix color="primary" class="mr-5">email</mat-icon>
+          <input  matInput autocomplete="off" name="email" formControlName="email" required #txtEmail
+            [(ngModel)]="email" 
+            pattern="[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*"
+            />
+          <button type="button" class="asp-color-medium" *ngIf="email" mat-icon-button matSuffix
+            (click)="email=''" aria-label="Xóa" aria-pressed="true">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="form-action">
+        <a class="mt-16 asp-color-medium">Mật khẩu được gửi lại đến mail tài khoản!</a>
+        <button class="float-center" [disabled]="!authForm.valid || submitting" (click)="onSubmit(authForm)"
+          mat-raised-button color="primary">Xác nhận</button>
+      </div>
+      <mat-progress-bar *ngIf="submitting" mode="indeterminate" color="primary"></mat-progress-bar>
+    </div>
+  </form>
+</ion-content>

@@ -1,0 +1,130 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button [fill]="'clear'" [routerLink]="['/components/prodscanqrcode/list-ins-machine']">
+        <ion-icon slot="icon-only" ios="chevron-back-outline" md="arrow-back-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">MACHINE INSTALLATION DETAIL</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="form-row">
+    <!-- Phần hiển thị thông tin -->
+    <mat-form-field appearance="fill">
+      <mat-label>Ngày yêu cầu</mat-label>
+      <input matInput name="docDate" required disabled="true" [ngModel]="docDate | date: 'dd/MM/yyyy'">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Line</mat-label>
+      <input matInput name="lineID" required disabled="true" [ngModel]="lineID">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Lệnh sản xuất</mat-label>
+      <input matInput name="woDocNo" required disabled="true" [ngModel]="woDocNo">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Mã sản phẩm</mat-label>
+      <input matInput name="productID" required disabled="true" [ngModel]="productID">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Công đoạn</mat-label>
+      <input matInput name="stageName" required disabled="true" [ngModel]="stageName">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Mã máy</mat-label>
+      <input matInput name="machineID" required disabled="true" [ngModel]="machineID">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Trạng thái yêu cầu</mat-label>
+      <input matInput name="requiredStatus" required disabled="true" [ngModel]="requiredStatus">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Mã nguyên vật liệu</mat-label>
+      <input matInput name="materialID" required disabled="true" [ngModel]="materialID">
+    </mat-form-field>
+
+    <!-- Trường: Mã khuôn/dao setup -->
+    <mat-form-field appearance="fill">
+      <mat-label>Mã khuôn/dao setup</mat-label>
+      <input matInput name="moldToolID" [(ngModel)]="moldToolID" placeholder="Nhập mã khuôn/dao..." (ngModelChange)="saveData()" [readonly]="isCompleted">
+    </mat-form-field>
+
+    <!-- Checkbox xác nhận nhận máy -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-item lines="none">
+          <ion-label>Xác nhận nhận máy</ion-label>
+          <ion-checkbox slot="start" [(ngModel)]="isMachineReceived" (ionChange)="saveData()" [disabled]="isCompleted"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- Tên kỹ thuật viên (scan QR từ thẻ nhân viên) -->
+    <mat-form-field appearance="fill">
+      <mat-label>Tên kỹ thuật viên</mat-label>
+      <input matInput name="techName" required [ngModel]="techName" readonly>
+      <ion-button slotmediabutton slot="end" (click)="scanTechnicianQR('name')" [disabled]="isCompleted">
+        <ion-icon name="scan-sharp"></ion-icon>
+      </ion-button>
+    </mat-form-field>
+
+    <!-- Thời gian bắt đầu setup (scan QR) -->
+    <mat-form-field appearance="fill">
+      <mat-label>Thời gian bắt đầu setup</mat-label>
+      <input matInput name="startTime" required [ngModel]="startTime | date: 'dd/MM/yyyy HH:mm:ss'" readonly>
+      <ion-button slot="end" (click)="scanTechnicianQR('start')" [disabled]="isCompleted">
+        <ion-icon name="scan-sharp"></ion-icon>
+      </ion-button>
+    </mat-form-field>
+
+    <!-- Thời gian kết thúc setup (scan QR) -->
+    <mat-form-field appearance="fill">
+      <mat-label>Thời gian kết thúc setup</mat-label>
+      <input matInput name="endTime" required [ngModel]="endTime | date: 'dd/MM/yyyy HH:mm:ss'" readonly>
+      <ion-button slot="end" (click)="scanTechnicianQR('end')" [disabled]="isCompleted">
+        <ion-icon name="scan-sharp"></ion-icon>
+      </ion-button>
+    </mat-form-field>
+
+    <!-- Tổng thời gian setup (cột mới) -->
+    <mat-form-field appearance="fill" *ngIf="startTime && endTime">
+      <mat-label>Tổng thời gian setup</mat-label>
+      <input matInput name="totalSetupTime" [value]="totalSetupTime + ' phút'" readonly>
+      <span matSuffix>phút</span>
+    </mat-form-field>
+
+    <!-- So sánh với thời gian target -->
+    <ion-row *ngIf="totalSetupTime && targetSetupTime">
+      <ion-col size="12">
+        <p><strong>Thời gian mục tiêu:</strong> {{ targetSetupTime }} phút</p>
+        <p [ngClass]="{'text-success': totalSetupTime <= targetSetupTime, 'text-danger': totalSetupTime > targetSetupTime}">
+          <strong>Kết quả:</strong> {{ totalSetupTime <= targetSetupTime ? 'Đạt' : 'Không đạt' }}
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <!-- Ghi chú nguyên nhân -->
+    <mat-form-field appearance="fill">
+      <mat-label>Ghi chú nguyên nhân</mat-label>
+      <textarea matInput name="reasonNotes" [(ngModel)]="reasonNotes" placeholder="Nhập ghi chú..." (ngModelChange)="saveData()" [readonly]="isCompleted"></textarea>
+    </mat-form-field>
+
+    <!-- Nút hoàn thành phiếu -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="block" color="success" (click)="completeForm()" [disabled]="isCompleted">
+          <ion-icon slot="start" name="checkmark-done"></ion-icon>
+          Hoàn thành phiếu
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>

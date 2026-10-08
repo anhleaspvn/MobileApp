@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()" fill="clear">
+        <ion-icon name="close-outline" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="text-align:center">Về asp ERP</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Giới thiệu chung</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>Công ty cổ phần phần mềm asp thành lập vào năm 2010</p>
+
+      <!-- <p>- Công ty được thành lập ngày 09 tháng 06 năm 1995 theo Giấy Chứng nhận Đầu tư số 472023000615 cấp đổi lần thứ
+        tư ngày 26/08/2014 bởi Ban Quản lý các Khu công nghiệp Đồng Nai.</p> -->
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Liên hệ</ion-card-title>
+    </ion-card-header>
+    <ion-item>
+      <ion-icon slot="start" name="business-sharp" color="danger" size="small"></ion-icon>
+      <ion-label>
+        <p>Số 60 Vũ Tông Phan</p>
+        <p>Phường An Phú, Thành phố Thủ Đức</p>
+        <p>Thành phố Hồ Chí Minh, Việt Nam</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item (click)="$event.stopPropagation();">
+      <ion-icon slot="start" md="call-sharp" ios="call-outline" color="danger" size="small"></ion-icon>
+      <ion-label>
+        <h3>
+          <a href="tel:02862624558" title="(028) 6262 4558">(028) 6262 4558</a>&nbsp;-&nbsp;
+          <a href="tel:02873005986" title="(028) 7300 5986">(028) 7300 5986</a>
+        </h3>
+      </ion-label>
+    </ion-item>
+
+    <ion-item (click)="$event.stopPropagation();">
+      <ion-icon slot="start" md="mail-sharp" ios="mail-outline" color="danger" size="small"></ion-icon>
+      <ion-label>
+        <h3>
+          <a href="mailto:support@asp.com.vn" title="support@asp.com.vn">support@asp.com.vn</a>
+        </h3>
+      </ion-label>
+    </ion-item>
+
+    <ion-item (click)="$event.stopPropagation();">
+      <ion-icon slot="start" md="globe-sharp" ios="globe-outline" color="danger" size="small"></ion-icon>
+      <ion-label>
+        <h3>
+          <a href="https://asp.com.vn" title="www.asp.com.vn ">www.asp.com.vn</a>
+        </h3>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+</ion-content>

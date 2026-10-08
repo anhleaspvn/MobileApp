@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <!-- <ion-back-button defaultHref="/components/inventory/list" text=""></ion-back-button> -->
+      <ion-button [fill]="'clear'" [routerLink]="['/components/voucher/list', strMaCt]">
+        <ion-icon slot="icon-only" ios="chevron-back-outline" md="arrow-back-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ strTitle }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" color="light" class="p-8">
+  <ion-grid>
+    <mat-horizontal-stepper labelPosition="bottom" [linear]="linner" #stepper>
+      <mat-step [stepControl]="fdInfo.control">
+        <ng-template matStepLabel>Thông tin chung</ng-template>
+        <form role="form" #fdInfo="ngForm">
+          <app-voucher-step-info-form [(model)]="model"></app-voucher-step-info-form>
+          <div class="form-row button-row p-5" align="center">
+            <button mat-raised-button (click)="resetInfo()" [disabled]="fdInfo.invalid">
+              Nhập lại
+            </button>
+            <button mat-raised-button matStepperNext color="primary" [disabled]="fdInfo.invalid">
+              Tiếp theo
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [completed]="model.detail && model.detail.length > 0">
+        <ng-template matStepLabel>Sản phẩm</ng-template>
+        <form role="form" #fdProduct="ngForm">
+          <app-voucher-step-products-form [(model)]="model"></app-voucher-step-products-form>
+          <div class="form-row p-5" align="start">
+            <button mat-raised-button matStepperPrevious color="default">
+              Quay lại
+            </button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </ion-grid>
+</ion-content>
+<ion-footer *ngIf="stepper.selectedIndex == 1" color="bgcolor" class="bg-footer ion-no-border">
+  <ion-toolbar>
+    <ion-button (click)="onSubmit()" expand="block" size="default" color="asp" [disabled]="
+          fdInfo.invalid ||
+          !model.detail ||
+          model.detail.length == 0 ||
+          submitting || FormCheckValid()
+        ">
+      <span>Lưu</span>
+      <ion-spinner slot="start" size="default" *ngIf="submitting"></ion-spinner>
+      <ion-icon name="checkmark-done-sharp" slot="start" size="default" *ngIf="!submitting"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

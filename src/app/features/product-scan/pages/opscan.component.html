@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button fill="clear"
+                  [routerLink]="['/tabs/home']">
+        <ion-icon slot="icon-only"
+                  ios="chevron-back-outline"
+                  md="arrow-back-outline">
+        </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">
+      OP Scanner
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+ <div class="form-row">
+
+    <!-- Lệnh sản xuất -->
+    <mat-form-field appearance="fill">
+      <mat-label>Lệnh sản xuất</mat-label>
+      <input matInput name="woDocNo" [(ngModel)]="model.woDocNo" 
+      (focus)="openWOsFilterModal()" required>
+      <button style="font-size: 18px;" mat-icon-button
+        matSuffix>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    
+    <!-- tên nhân viên -->
+    <mat-form-field appearance="fill">
+       <mat-label>Tên nhân viên</mat-label>
+      <input matInput name="techName" required [ngModel]="techName" readonly>
+      <ion-button slotmediabutton slot="end" (click)="scanTechnicianQR()" [disabled]="isCompleted">
+        <ion-icon name="scan-sharp"></ion-icon>
+      </ion-button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+       <mat-label>QR Code</mat-label>
+      <input matInput name="qrCode" required [ngModel]="qrCode" readonly>
+      <ion-button slotmediabutton slot="end" (click)="scanQRCode()" [disabled]="isCompleted">
+        <ion-icon name="scan-sharp"></ion-icon>
+      </ion-button>
+    </mat-form-field>
+  </div>
+</ion-content>
+

@@ -1,0 +1,98 @@
+﻿.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: #ffffff;
+  padding: 10px;
+}
+
+.border-list {
+  min-width: 100%;
+  width: max-content;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.header-item {
+  --background: #f8fafc;
+  --min-height: 48px;
+  border-bottom: 2px solid #e2e8f0;
+
+  b {
+    color: #475569;
+    font-size: 13px;
+    font-weight: 700;
+  }
+}
+
+.invisible-placeholder-btn {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.data-row {
+  align-items: center;
+  font-size: 13px;
+  color: #334155;
+}
+
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text-monospace {
+  font-family: Consolas, Monaco, monospace;
+  font-size: 12px;
+  color: #475569;
+}
+
+.text-blue {
+  color: #3b82f6;
+}
+
+.text-red {
+  color: #ef4444;
+}
+
+.font-bold {
+  font-weight: 600;
+}
+
+/* Alternate row striping */
+ion-item:nth-child(even) {
+  --background: #f8fafc;
+}
+
+ion-item:nth-child(odd) {
+  --background: #ffffff;
+}
+
+/* Badges for OK/NG results */
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  text-align: center;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-ok {
+  background-color: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.badge-ng {
+  background-color: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.header-row, .data-row {
+  flex-wrap: nowrap !important;
+}

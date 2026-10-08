@@ -1,0 +1,117 @@
+﻿<ion-header [translucent]="true">
+  <ion-toolbar color="asp">
+    <ion-buttons slot="start">
+      <ion-button [fill]="'clear'" [routerLink]="['/components/qcinspection/list']">
+        <ion-icon slot="icon-only" ios="chevron-back-outline" md="arrow-back-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Chi tiết ngoại quan{{ checkState ? ' - ' + checkState : '' }}</ion-title>
+    <ion-buttons slot="end" fill="clear">
+      <ion-button>
+        <i class="material-icons">sort_by_alpha</i>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="loadMoreData($event,true)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/components/qcinspection/create" color="asp">
+      <ion-icon name="add" size="large"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> -->
+  
+   <div class="table-responsive">
+    <ng-container *ngIf="!loading; else elseTemplate">    
+      <ion-list class="mt-0 pt-0 border-list">
+        <!-- Styled Header Item with matching Slot Start to fix alignment -->
+        <ion-item class="header-item" lines="full">
+          <ion-button fill="clear" slot="start" class="invisible-placeholder-btn">
+            <ion-icon name="desktop-outline"></ion-icon>
+          </ion-button>
+          <ion-grid class="ion-no-padding">
+            <ion-row class="header-row">
+              <ion-col [style.width.px]="colWidths[0]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="0"><b>Tên công đoạn</b></ion-col>
+              <ion-col [style.width.px]="colWidths[1]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="1"><b>Số công đoạn</b></ion-col>
+              <ion-col [style.width.px]="colWidths[2]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="2"><b>SL kiểm tra</b></ion-col>
+              <ion-col [style.width.px]="colWidths[3]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="3"><b>SL NG</b></ion-col>
+              <ion-col [style.width.px]="colWidths[4]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="4"><b>Kết quả</b></ion-col>
+              <ion-col [style.width.px]="colWidths[5]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="5"><b>Thời gian KT</b></ion-col>
+              <ion-col [style.width.px]="colWidths[6]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="6"><b>Trạng thái KT</b></ion-col>
+              <ion-col [style.width.px]="colWidths[7]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="7"><b>Mã lỗi</b></ion-col>
+              <ion-col [style.width.px]="colWidths[8]" style="flex: 0 0 auto;" [appColResize]="colWidths" [colIndex]="8"><b>Mô tả lỗi</b></ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+        <ion-item *ngFor="let item of data;trackBy:trackBy">
+          <ion-button fill="clear" [matMenuTriggerFor]="menu" slot="start" color="medium">
+            <ion-icon slot="start" *ngIf="item.is_App;else desktopIcon" name="phone-portrait-outline"
+              color="asp">
+            </ion-icon>
+          </ion-button>
+          <ng-template #desktopIcon>
+            <ion-icon slot="start" name="desktop-outline" color="asp"></ion-icon>
+          </ng-template>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [disabled]="isLocked" (click)="view_defect(item)" detail="true">
+              <mat-icon>input</mat-icon>
+              <span>Nhập Defects</span>
+            </button>
+            <button mat-menu-item (click)="viewdefect(item)" detail="true">
+              <mat-icon>input</mat-icon>
+              <span>Xem Defects</span>
+            </button>
+            <button mat-menu-item [disabled]="isLocked" (click)="view_edit(item)" detail="true">
+              <mat-icon>edit</mat-icon>
+              <span>Sửa</span>
+            </button>
+            <button mat-menu-item [disabled]="isLocked" (click)="delete(item)" detail="true">
+              <mat-icon>delete</mat-icon>
+              <span>Xoá</span>
+            </button>
+          </mat-menu>
+          <ion-grid class="ion-no-padding">
+            <!-- Data Row with Matching Column Sizes -->
+            <ion-row class="data-row">
+              <ion-col [style.width.px]="colWidths[0]" style="flex: 0 0 auto;" class="text-truncate">
+                {{item.iqcCheckName}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[1]" style="flex: 0 0 auto;" class="text-truncate">
+                {{item.iqcCheckCont}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[2]" style="flex: 0 0 auto;">
+                {{item.iqcTemplateQuantity | number}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[3]" style="flex: 0 0 auto;" class="text-red font-bold">
+                {{item.defectQuantity}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[4]" style="flex: 0 0 auto;">
+                <span class="badge" [ngClass]="item.iqcEvalueResult === 'OK' ? 'badge-ok' : 'badge-ng'">
+                  {{ item.iqcEvalueResult }}
+                </span>
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[5]" style="flex: 0 0 auto;">
+                {{item.iqcPeriodTime}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[6]" style="flex: 0 0 auto;" class="text-truncate">
+                {{item.checkState ?? item.CheckState}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[7]" style="flex: 0 0 auto;" class="text-monospace">
+                {{item.defectID}}
+              </ion-col>
+              <ion-col [style.width.px]="colWidths[8]" style="flex: 0 0 auto;" class="text-truncate">
+                {{item.defectDescription}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <asp-skeleton></asp-skeleton>
+    </ng-template>
+   </div>
+</ion-content>
+

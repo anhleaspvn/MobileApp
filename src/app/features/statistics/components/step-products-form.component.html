@@ -1,0 +1,178 @@
+<ion-row>
+    <ion-col size="6">
+        <mat-form-field appearance="fill">
+            <mat-label>Bắt đầu</mat-label>
+            <input [readonly]="is_QC" matInput type="time" name="tu_ThoiGian" [(ngModel)]="model.tu_ThoiGian" />
+        </mat-form-field>
+    </ion-col>
+
+    <ion-col size="6">
+        <mat-form-field appearance="fill">
+            <mat-label>Kết thúc</mat-label>
+            <input [readonly]="is_QC" name="den_ThoiGian" matInput type="time" [(ngModel)]="model.den_ThoiGian">
+        </mat-form-field>
+    </ion-col>
+
+    <ion-col size="6">
+        <mat-form-field appearance="fill">
+            <mat-label>Thời gian dừng máy</mat-label>
+            <input [readonly]="is_QC" matInput name="loss_ThoiGian" [(ngModel)]="model.loss_ThoiGian"
+            currencyMask [options]="currencyMask">
+        </mat-form-field>
+    </ion-col>
+
+    <ion-col size="6">
+        <mat-form-field appearance="fill">
+            <mat-label>Lý do</mat-label>
+            <input [readonly]="is_QC" matInput name="ly_Do" [(ngModel)]="model.ly_Do">
+        </mat-form-field>
+    </ion-col>
+
+    <ion-col size="6">
+        <mat-form-field appearance="fill">
+            <mat-label>Số người sản xuất</mat-label>
+            <input [readonly]="is_QC" matInput type="tel" name="so_Luong_Nguoi_Sx" [(ngModel)]="model.so_Luong_Nguoi_Sx"
+            currencyMask [options]="currencyMask">
+        </mat-form-field>
+    </ion-col>
+
+    <ion-col size="6">
+        <mat-form-field appearance="fill">
+            <mat-label>Số lượng cần sản xuất</mat-label>
+            <input matInput type="tel" name="so_Luong_Ct_Can_Sx" [(ngModel)]="model.so_Luong_Ct_Can_Sx" readonly 
+            currencyMask [options]="currencyMask">
+        </mat-form-field>
+    </ion-col>
+
+    <ion-col size="6" >
+        <mat-form-field appearance="fill" >
+            <mat-label>Số lượng đầu vào</mat-label>
+            <input [readonly]="is_QC"  matInput type="tel" name="so_Luong_Dau_Vao" [(ngModel)]="model.so_Luong_Dau_Vao"
+                currencyMask [options]="currencyMask" >
+            <button [disabled]="is_QC" mat-button *ngIf="model.so_Luong_Dau_Vao> 0" matPrefix mat-icon-button aria-label="Clear"
+                (click)="model.so_Luong_Dau_Vao = 0">
+                <mat-icon class="asp-color-medium">close</mat-icon>
+            </button>
+        </mat-form-field>
+    </ion-col>
+
+    <ion-col size="6">
+        <mat-form-field appearance="fill">
+            <mat-label>Số lượng thống kê</mat-label>
+            <input [readonly]="is_QC" matInput type="tel" name="so_Luong" [(ngModel)]="model.so_Luong" currencyMask
+                [options]="currencyMask" (ngModelChange)="checkchangeSo_Luong()">
+            <button [disabled]="is_QC" mat-button *ngIf="model.so_Luong> 0" matPrefix mat-icon-button aria-label="Clear"
+                (click)="model.so_Luong = 0">
+                <mat-icon class="asp-color-medium">close</mat-icon>
+            </button>
+        </mat-form-field>
+    </ion-col>
+
+    <ng-template [ngIf]="is_QC">
+        <ion-col size="6">
+            <mat-slide-toggle color="asp" [ngModelOptions]="{standalone:true}" [(ngModel)]="model.is_AQL">AQL
+            </mat-slide-toggle>
+        </ion-col>
+        <ng-template [ngIf]="!model.is_AQL">
+            <ion-col size="6">
+                <mat-form-field appearance="fill">
+                    <mat-label>Số lượng đạt</mat-label>
+                    <input readonly matInput type="tel" name="so_Luong_Dat" [(ngModel)]="model.so_Luong_Dat"currencyMask [options]="currencyMask">
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col size="6">
+                <mat-form-field appearance="fill">
+                    <mat-label>Số lượng không đạt</mat-label>
+                    <input matInput type="tel" name="so_Luong_Khong_Dat" [(ngModel)]="model.so_Luong_Khong_Dat"
+                    appZero currencyMask [options]="currencyMask" (ngModelChange)="changeKhongDat()">
+                    <button mat-button *ngIf="model.so_Luong_Khong_Dat> 0" matPrefix mat-icon-button aria-label="Clear"
+                        (click)="deleteKhongDat()" >
+                        <mat-icon class="asp-color-medium">close</mat-icon>
+                    </button>
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col size="6">
+                <!-- <mat-slide-toggle color="asp" [ngModelOptions]="{standalone:true}" [(ngModel)]="model.is_Dat_Qc">Kết quả đạt QC
+                </mat-slide-toggle> -->
+                <section class="example-section">
+                    <label class="example-margin">Kết quả QC:</label>
+                    <mat-radio-group [(ngModel)]="labelPosition" >
+                      <mat-radio-button class="example-margin" value="true">Đạt</mat-radio-button>
+                      <mat-radio-button class="example-margin" value="false">Không đạt</mat-radio-button>
+                    </mat-radio-group>
+                  </section>
+            </ion-col>
+        </ng-template>
+    </ng-template>
+
+    <ng-template [ngIf]="model.is_AQL && is_QC">
+        <ion-col size="6">
+            <mat-form-field appearance="fill">
+                <mat-label>AQL</mat-label>
+                <mat-select name="aql" [(ngModel)]="model.aql" required (selectionChange)="change_AQL()">
+                    <mat-option *ngFor="let op of listAQL" [value]="op.aql">
+                        {{ op.aql }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ion-col>
+
+        <ion-col size="6">
+            <mat-form-field appearance="fill">
+                <mat-label>Số lượng lấy mẫu</mat-label>
+                <input readonly matInput type="tel" name="so_Luong_Lay_Mau" [(ngModel)]="model.so_Luong_Lay_Mau"
+                currencyMask [options]="currencyMask">
+            </mat-form-field>
+        </ion-col>
+
+        <ion-col size="6">
+            <mat-form-field appearance="fill">
+                <mat-label>Số lượng lỗi cho phép</mat-label>
+                <input readonly matInput type="tel" name="so_Luong_ACC" [(ngModel)]="model.so_Luong_ACC"
+                currencyMask [options]="currencyMask">
+            </mat-form-field>
+        </ion-col>
+
+        <ion-col size="6">
+            <mat-form-field appearance="fill">
+                <mat-label>Số lượng đạt</mat-label>
+                <input readonly matInput type="tel" name="so_Luong_Dat" [(ngModel)]="model.so_Luong_Dat"
+                currencyMask [options]="currencyMask">
+            </mat-form-field>
+        </ion-col>
+
+        <ion-col size="6">
+            <mat-form-field appearance="fill">
+                <mat-label>Số lượng không đạt</mat-label>
+                <input matInput type="tel" name="so_Luong_Khong_Dat" [(ngModel)]="model.so_Luong_Khong_Dat" currencyMask
+                    [options]="currencyMask" (ngModelChange)="changeKhongDat()">
+                <button mat-button *ngIf="model.so_Luong_Khong_Dat> 0" matPrefix mat-icon-button aria-label="Clear"
+                    (click)="deleteKhongDat()">
+                    <mat-icon class="asp-color-medium">close</mat-icon>
+                </button>
+            </mat-form-field>
+        </ion-col>
+
+        <ion-col size="12">
+            <!-- <mat-slide-toggle [disabled]="true" color="asp" [ngModelOptions]="{standalone:true}" [(ngModel)]="model.is_Dat_Qc">{{model.is_Dat_Qc?"Đạt QC":"Không đạt QC"}}
+            </mat-slide-toggle> -->
+            <section class="example-section">
+                <label class="example-margin">Kết quả QC:</label>
+                <mat-radio-group [(ngModel)]="labelPosition" >
+                  <mat-radio-button class="example-margin" value="true">Đạt</mat-radio-button>
+                  <mat-radio-button class="example-margin" value="false">Không đạt</mat-radio-button>
+                </mat-radio-group>
+              </section>
+        </ion-col>
+    </ng-template>
+
+    <ion-col size="12">
+        <mat-form-field appearance="fill">
+            <mat-label>Ghi chú</mat-label>
+            <input matInput name="ghi_Chu" [(ngModel)]="model.ghi_Chu">
+        </mat-form-field>
+    </ion-col>
+
+</ion-row>

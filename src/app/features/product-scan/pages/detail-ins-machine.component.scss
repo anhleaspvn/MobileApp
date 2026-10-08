@@ -1,0 +1,13 @@
+::ng-deep .mat-form-field-disabled {
+    .mat-form-field-wrapper {
+      .mat-form-field-flex {
+        .mat-form-field-infix {
+          .mat-form-field-label-wrapper .mat-form-field-label,
+          .mat-input-element {
+            opacity: 1 !important;
+            color: rgba(0, 0, 0, 0.87) !important; // Đảm bảo màu chữ không bị mờ
+          }
+        }
+      }
+    }
+  }

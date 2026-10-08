@@ -6,20 +6,20 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IonicModule, IonicRouteStrategy, IonRouterOutlet } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage-angular';
 
-import { MaterialModule } from './material.module';
+import { MaterialModule } from './shared/ui/material.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppDirectiveModule } from './shared/directives/app-directive.module';
-import { AuthInterceptor, HttpErrorInterceptor } from './shared/interceptors';
+import { AuthInterceptor, DuplicateRequestInterceptor, HttpErrorInterceptor } from 'src/app/core/interceptors';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Network } from '@awesome-cordova-plugins/network/ngx';
 import { SpeechRecognition } from '@awesome-cordova-plugins/speech-recognition/ngx';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
 
-import { NetworkService } from './shared/network.service';
-import { IdentityService, StorageService } from './shared/services';
+import { NetworkService } from 'src/app/core/network/network.service';
+import { IdentityService, StorageService } from 'src/app/core';
 
 import { LongPressModule } from 'ionic-long-press';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -74,6 +74,8 @@ export class aspGestureConfig extends HammerGestureConfig {
     BarcodeScanner,
     SpeechRecognition,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    // Dedupe phải chạy TRƯỚC AuthInterceptor để chặn request trùng sớm nhất có thể.
+    { provide: HTTP_INTERCEPTORS, useClass: DuplicateRequestInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     StorageService,

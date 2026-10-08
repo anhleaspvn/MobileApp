@@ -1,0 +1,167 @@
+@import "../../../../assets/sass/variables.scss";
+
+ion-content{
+    --background: url('../../../../assets/images/logo.png') no-repeat 100% 100%;
+}
+::ng-deep {
+    
+    ion-segment {
+        --background: transparent;
+
+        ion-segment-button {
+            border: none !important;
+            --indicator-height: 0;
+            --background: transparent;
+            --border-width: 0;
+        }
+
+        ion-segment-button:focus {
+            border: none !important;
+            outline: none !important;
+        }
+
+        ion-segment-button.segment-button-checked {
+            background-color: transparent !important;
+            color: $asp-primary-colors !important;
+        }
+    }
+
+    #home-header {
+        .logo {
+            width: 110px;
+            display: inline-block;
+            margin: 8px;
+        }
+        .title {
+            text-align: left;
+            padding-inline-start: 10px;
+            font-weight: 500;
+        }
+        .mat-icon-button {
+            .mat-icon {
+                font-size: 28px;
+            }
+        }
+        .notifications {
+            .mat-badge-medium {
+                .mat-badge-content {
+                    width: 19px;
+                    height: 19px;
+                    line-height: 19px;
+                    font-size: 9px;
+                    font-weight: normal;
+                    top: -7px;
+                    right: -9px;
+                }
+            }
+        }
+        ion-toolbar {
+            &.last {
+                height: 90px;
+                border-bottom-left-radius: 30px !important;
+                border-bottom-right-radius: 30px;
+                -webkit-border-bottom-left-radius: 30px;
+                .member {
+                    .avatar {
+                        margin-right: 5px !important;
+                        margin-left: 16px;
+                        mat-icon {
+                            font-size: 40px;
+                        }
+                    }
+
+                    .member-info {
+                        line-height: 13px;
+                        .member-id {
+                            font-size: 12pt;
+                            font-weight: 500;
+                        }
+
+                        .member-name {
+                            font-size: 9pt;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .home-background {
+        height: 150px;
+        background-color: $asp-primary-colors;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        z-index: 1;
+
+        ion-toolbar {
+            top: 55px;
+
+            .member {
+                .avatar {
+                    margin: 10px !important;
+
+                    mat-icon {
+                        font-size: 40px;
+                    }
+                }
+
+                .member-info {
+                    line-height: 13px;
+
+                    .member-id {
+                        font-size: 11pt;
+                        font-weight: 500;
+                    }
+
+                    .member-name {
+                        font-size: 9pt;
+                    }
+                }
+            }
+        }
+        &.ios {
+            height: 180px;
+            ion-toolbar {
+                top: 50px;
+            }
+        }
+    }
+
+    .content-home {
+        
+        
+        
+        position: relative;
+        top: -61px;
+        z-index: 99999;
+        min-width: 90%;
+
+        // &.ios {
+        //     top: -70px;
+        // }
+
+        .content-fixed {
+            border-radius: 50px;
+
+            .swiper-container-horizontal {
+                .swiper-pagination-bullets {
+                    bottom: -5px !important;
+                }
+            }
+        }
+
+        .content-dynamic {
+            .title {
+                &.ios {
+                    padding: 8px;
+                    font-weight: normal;
+                }
+            }
+
+            .feature-list {
+                border-radius: 6px;
+                background: white;
+            }
+        }
+    }
+}
