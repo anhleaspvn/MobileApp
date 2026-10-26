@@ -1,0 +1,9 @@
+{
+	"appId": "vn.asp.app",
+	"appName": "asp",
+	"webDir": "www",
+	"bundledWebRuntime": false,
+	"ios": {
+		"scheme": "asp"
+	}
+}
